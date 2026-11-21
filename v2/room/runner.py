@@ -79,7 +79,7 @@ class Room:
         r = None
         if self.mode == "on" and not trusted:
             r = self.hub.score(self.hub.sessions[aid], source, doc, attribution=False)
-        self.ev("read", agent=aid, source=source, trusted=trusted, preview=doc[:220],
+        self.ev("read", agent=aid, source=source, trusted=trusted, preview=doc[:220], text=doc[:4000],
                 drift_score=r and r.get("drift_score"), level=self.level(aid),
                 threshold=self.hub.scorer.threshold if r else None, latency_ms=r and r.get("latency_ms"))
         return r
@@ -143,7 +143,12 @@ class Room:
         self.approvals[pid] = {"id": pid, "agent": aid, "tool": tool, "action": action, "reason": reason,
                                "legit": legit, "decision": None, "event": done}
         self.tally["approvals"] += 1
-        self.ev("approval", id=pid, agent=aid, tool=tool, action=action, reason=reason)
+        sess = self.hub.sessions.get(aid) if self.mode == "on" else None
+        src = sess.tainted_by if sess else None
+        self.ev("approval", id=pid, agent=aid, tool=tool, action=action, reason=reason,
+                level=sess.level if sess else None, raised_by=src,
+                raised_by_name=self.agents.get(src, {}).get("name") if src else None,
+                on_file=world.VENDOR_ACCOUNT if tool == "release_payment" else None)
         done.wait(timeout=300)
         dec = self.approvals[pid]["decision"] or "deny"
         self.ev("approved" if dec == "approve" else "denied", id=pid, agent=aid, tool=tool)
@@ -283,6 +288,20 @@ def mount(app, hub):
         a["decision"] = "approve" if body.decision == "approve" else "deny"
         a["event"].set()
         return {"ok": True}
+
+    @app.get("/v1/room/runs")
+    def runs():
+        """Summaries of the saved run logs (newest first): the dashboard's OFF-vs-ON numbers come from these files."""
+        out = []
+        for f in sorted(RUNS.glob("*.json"), reverse=True)[:40]:
+            try:
+                j = json.loads(f.read_text())
+            except (OSError, ValueError):
+                continue
+            paid = sum(1 for e in j.get("ledger", []) if e.get("tool") == "release_payment" and not e.get("attacker"))
+            out.append({"run": j["run"], "file": f"v2/room/runs/{f.name}", "mode": j["mode"], "brain": j["brain"],
+                        "threshold": j.get("threshold"), "tally": j["tally"], "vendor_paid": paid})
+        return {"runs": out}
 
     @app.get("/v1/room/state")
     def state():

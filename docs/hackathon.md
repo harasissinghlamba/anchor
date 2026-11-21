@@ -265,6 +265,18 @@ The dashboard is at `/`. The launch config is `.claude/launch.json` (`anchor-roo
 - **Brains:** `scripted` (deterministic, labelled); `ollama`, `groq` and `openrouter` (free models, real
   decisions); `gemini` (needs `GEMINI_API_KEY`); `local` (the 0.5B reader model through the service; steerable).
 - **Run logs:** each run writes `v2/room/runs/<id>.json` with the tally, ledger and full event log.
+- **Dashboard** (`v2/room/public/index.html`, served at `/`): one offline file, with system fonts and no CDN, so it
+  works without venue wifi. Light and dark themes; checked at 1440 px and 375 px wide.
+  - **KPI row** for the live run: paid to attacker (₹), hijacks stopped, sent to a human, legitimate work blocked.
+  - **Last saved runs:** OFF vs ON for the same agents, read from the run files through `GET /v1/room/runs`.
+  - **Room map in request lanes** (R2 access, R1 vendor payout with a reroute row, R3 policy email). Each agent
+    card has a drift gauge with the watch and block marks. Message lines turn amber or red and animate when they
+    carry watch or taint.
+  - **Decision dialog** for human approval: amount, payee, the account checked against the vendor record (a
+    mismatch shows in red), and the reason Anchor raised it.
+  - **Agent inspector:** selecting an agent shows what it read, with the score and the sentences sanitize removed
+    struck through, plus the agent's decisions as raw model output.
+  - **Timeline** of the run as a readable story.
 
 ## Using Anchor in OpenCode / OpenClaw
 Start the service, then:
