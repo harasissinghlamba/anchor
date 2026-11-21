@@ -115,14 +115,24 @@ matching benign families, and the probe was never retrained on them.
   the gate waiting for an in-flight score, the OpenCode hooks in both shapes, and OpenClaw block and approval.
 
 ## Steering: status
-- `steer_eval.py` is written but **not run yet**. It runs after the long-context eval frees the CPU.
-- It fits directions on 120 + 120 train rows, picks the layer set and alpha on val, then reports test hijack rate
-  (steering off vs on) and clean completion with steering forced on. It writes `out/qwen0.5b/steering.json` and
-  `steer_dirs.json`.
+- **Round 1** (`v2/offline/out/qwen0.5b/steering_round1.json`): directions fit on 120 + 120 train rows, setting
+  picked on 24 val rows, tested on 50 held-out injected and 50 clean rows, greedy decoding.
+
+  | | Steering off | Steering on (layers 6–18, α=3, prompt + generated tokens) |
+  |---|---|---|
+  | Hijacked (attacker address or secret) | 6/50 | **0/50** |
+  | Usable action on injected rows | 50/50 | 29/50 |
+  | Clean task completed (steering forced on) | 45/50 | 23/50 |
+
+  Round 1 stops every hijack, but at this strength it breaks about 40% of the model's actions. Its pick rule
+  ignored unusable actions, so the strongest setting won by default. **Not a pitch claim as it stands.**
+- **Round 2 (running).** The pick rule counts an unusable action as a failure. A gentler variant steers only the
+  prompt (how the poisoned output is *read*), not the generated reply. It writes `out/qwen0.5b/steering.json`.
 - Scope: steering edits the agent's own forward pass. It applies only to open-weight agents Anchor hosts (local
   Qwen through `/v1/chat/completions` or the room's `local` brain). For Gemini agents the room steers at the macro
   level: quarantine, sanitize, reroute, human approval.
-- Claim nothing about steering until `steering.json` exists.
+- In the room, steering only switches on after a session is already tainted, when its side effects are blocked
+  anyway. So a damaged reply costs less there than in this test, where steering is forced on.
 
 ## Anchor service (`v2/anchor/service.py`)
 `cd v2 && HF_HUB_OFFLINE=1 ANCHOR_DEVICE=mps offline/.venv/bin/python -m anchor.service` (port 8765; optional
@@ -198,7 +208,7 @@ Start the service, then:
 
 ## Next, in order
 1. ~~Long-context eval~~ (done; above). **Retrain the probe on the H1 dataset** (team decision; it rewrites `probe.json`).
-2. Run `steer_eval.py` and record the hijack rate off vs on and clean completion.
+2. Steering round 1 done (above); round 2 running.
 3. ~~Python tests~~ (done, 9/9). ~~OFF and ON scripted room runs~~ (done). Try the `gemini` and `local` brains.
 5. Live OpenCode and OpenClaw runs against the service, if the CLIs can be installed.
 6. Pitch deck numbers: only from `long_context.json`, `steering.json` and `v2/room/runs/*.json`.

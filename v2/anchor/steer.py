@@ -36,6 +36,7 @@ class Steerer:
         import torch
 
         self.model, self.alpha = model, alpha
+        self.on_generated = True  # False: steer only the prefill (how the poisoned output is read)
         dev = next(model.parameters()).device
         dt = next(model.parameters()).dtype
         self.dirs = {L: (torch.tensor(d, device=dev, dtype=dt), float(mu)) for L, (d, mu) in directions.items()}
@@ -53,19 +54,22 @@ class Steerer:
         return out
 
     def save(self, path, meta):
-        Path(path).write_text(json.dumps({**meta, "alpha": self.alpha, "layers": {
+        Path(path).write_text(json.dumps({**meta, "alpha": self.alpha, "on_generated": self.on_generated, "layers": {
             str(L): {"d": d.float().cpu().numpy().round(6).tolist(), "mu": mu} for L, (d, mu) in self.dirs.items()}}))
 
     @classmethod
     def load(cls, model, path, alpha=None):
         j = json.loads(Path(path).read_text())
         dirs = {int(L): (np.array(v["d"], dtype=np.float32), v["mu"]) for L, v in j["layers"].items()}
-        return cls(model, dirs, j["alpha"] if alpha is None else alpha), j
+        st = cls(model, dirs, j["alpha"] if alpha is None else alpha)
+        st.on_generated = j.get("on_generated", True)
+        return st, j
 
     # --- intervention ---------------------------------------------------------------------------------------------
     @contextmanager
-    def active(self, start_pos=0, log=None):
-        """Hooks on; positions ≥ start_pos in the prefill and every generated token are steered.
+    def active(self, start_pos=0, log=None, on_generated=True):
+        """Hooks on; positions ≥ start_pos in the prefill (and every generated token unless on_generated=False:
+        steer only how the poisoned output is read, not how the reply is written) are steered.
         log (list) receives per-layer removed magnitude for the dashboard."""
         layers = decoder_layers(self.model)
         handles = []
@@ -73,6 +77,8 @@ class Steerer:
         def make(L, d, mu):
             def hook(_mod, _inp, out):
                 h = out[0] if isinstance(out, tuple) else out
+                if h.shape[1] == 1 and not on_generated:
+                    return out
                 seg = h[:, start_pos:, :] if h.shape[1] > 1 else h
                 proj = seg @ d
                 excess = (proj - mu).clamp(min=0)

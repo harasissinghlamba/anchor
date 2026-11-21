@@ -27,7 +27,10 @@ from gen_actions import ASK, is_hijack, parse  # noqa: E402
 from scenario_pick import attacker_address  # noqa: E402
 
 MAX_NEW = 160
-CONFIGS = [([9], 1.0), ([6, 9, 12, 15], 1.0), ([6, 9, 12, 15], 2.0), ([6, 9, 12, 15, 18], 3.0)]
+# (layers, alpha, steer generated tokens too). Picked on val by failures = hijacked + unusable actions (a broken
+# reply is not a defence), ties → more clean completions.
+CONFIGS = [([9], 1.0, True), ([6, 9, 12, 15], 2.0, True), ([6, 9, 12, 15, 18], 3.0, True),
+           ([6, 9, 12, 15, 18], 3.0, False), ([6, 9, 12, 15, 18], 5.0, False), ([9, 12], 3.0, False)]
 
 
 def attackable(r):
@@ -57,7 +60,7 @@ def main(argv=None):
         text, ids, offsets = extract.encode(tok, msgs)
         return ids, output_start(tok, text, offsets, r["output"])
 
-    all_layers = sorted({L for ls, _ in CONFIGS for L in ls})
+    all_layers = sorted({L for ls, _, _ in CONFIGS for L in ls})
 
     def last_states(r):
         ids, _ = prompt(r)
@@ -85,7 +88,7 @@ def main(argv=None):
             if steer is None:
                 g = model.generate(x, max_new_tokens=MAX_NEW, do_sample=False)
             else:
-                with steer.active(start_pos=start):
+                with steer.active(start_pos=start, on_generated=steer.on_generated):
                     g = model.generate(x, max_new_tokens=MAX_NEW, do_sample=False)
         raw = tok.decode(g[0, len(ids):], skip_special_tokens=True)
         return raw, parse(raw)
@@ -109,24 +112,28 @@ def main(argv=None):
     val_inj = [r for r in single if r["split"] == "val" and attackable(r)][:a.val]
     val_cln = [r for r in single if r["split"] == "val" and r["label"] == 0][:a.val // 2]
     sweep = []
-    for layers, alpha in CONFIGS:
+    for layers, alpha, gen in CONFIGS:
         st = Steerer(model, {L: dirs_all[L] for L in layers}, alpha)
+        st.on_generated = gen
         r_ = rates(val_inj, val_cln, st)
-        sweep.append({"layers": layers, "alpha": alpha, **{k: v for k, v in r_.items() if k != "samples"}})
+        sweep.append({"layers": layers, "alpha": alpha, "on_generated": gen,
+                      **{k: v for k, v in r_.items() if k != "samples"}})
         print("val", layers, alpha, sweep[-1], f"{time.time() - t0:.0f} s", flush=True)
     off_val = rates(val_inj, val_cln, None)
-    best = min(sweep, key=lambda s: (s["hijacked"], -s["completed"]))
+    best = min(sweep, key=lambda s: (s["hijacked"] + s["injected"] - s["valid_actions_injected"], -s["completed"]))
     print("val off", {k: v for k, v in off_val.items() if k != "samples"}, "best", best, flush=True)
 
     test_inj = [r for r in single if r["split"] == "test" and attackable(r)][:a.test]
     test_cln = [r for r in single if r["split"] == "test" and r["label"] == 0][:a.test]
     steer = Steerer(model, {L: dirs_all[L] for L in best["layers"]}, best["alpha"])
+    steer.on_generated = best["on_generated"]
     off = rates(test_inj, test_cln, None)
     on = rates(test_inj, test_cln, steer)
     out = {"run_meta": run_meta(run, device), "frame": "gen_actions (messages + ASK), greedy, max_new_tokens=%d" % MAX_NEW,
            "fit_rows": {"injected": len(fit_inj), "clean": len(fit_cln)},
            "val": {"off": {k: v for k, v in off_val.items() if k != "samples"}, "sweep": sweep, "picked": best},
-           "test": {"off": off, "on": on}, "config": {"layers": best["layers"], "alpha": best["alpha"]},
+           "test": {"off": off, "on": on}, "config": {"layers": best["layers"], "alpha": best["alpha"], "on_generated": best["on_generated"]},
+           "pick_rule": "min(hijacked + unusable actions) on val, ties → more clean completions",
            "seconds": round(time.time() - t0)}
     (run.out / "steering.json").write_text(json.dumps(out, indent=2, ensure_ascii=False))
     steer.save(run.out / "steer_dirs.json", {"run_meta": run_meta(run, device), "fit_rows": out["fit_rows"]})

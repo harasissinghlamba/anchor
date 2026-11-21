@@ -255,7 +255,7 @@ def generate(scorer, steerer, messages, max_new=256):
     x = torch.tensor([enc["input_ids"]], device=device)
     with scorer.lock, torch.no_grad():
         if steerer is not None:
-            with steerer.active(start_pos=start):
+            with steerer.active(start_pos=start, on_generated=steerer.on_generated):
                 g = model.generate(x, max_new_tokens=max_new, do_sample=False)
         else:
             g = model.generate(x, max_new_tokens=max_new, do_sample=False)
