@@ -1,0 +1,7 @@
+{
+  "id": "anchor-guard",
+  "name": "Anchor",
+  "description": "Task-drift firewall: scores untrusted tool results with model activations and gates side effects.",
+  "activation": { "onStartup": true },
+  "configSchema": { "type": "object", "additionalProperties": false }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "anchor-js",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/sdk", "packages/opencode", "packages/openclaw"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -b packages/sdk packages/opencode packages/openclaw",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "pack": "npm run build && mkdir -p dist-tgz && npm pack --workspaces --pack-destination dist-tgz"
+  },
+  "devDependencies": { "@types/node": "22.15.3", "typescript": "5.9.3" }
+}
