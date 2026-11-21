@@ -46,11 +46,31 @@ only the first and last 400 tokens of a long output, so an injection in the midd
 - **Trust boundary.** Only untrusted sources are scored: web, MCP, email, tickets, other agents' messages.
   Workspace files are not.
 
-**Measurement (`v2/offline/long_context_eval.py` → `v2/offline/out/qwen0.5b/long_context.json`).** It scores the
-same test rows three ways: sidecar, in-agent with a coding-harness system prompt, and in-agent with the harness
-plus three earlier file reads (about 6–7k tokens). It reports AUROC, catch rate and false alarms at the frozen
-threshold. **Status: running on CPU.** The first MPS attempt used 15 GB on 7k-token prompts, so it was moved to
-CPU. The numbers go here once the file exists.
+**Measurement (`v2/offline/long_context_eval.py` → `v2/offline/out/qwen0.5b/long_context.json`).**
+- Same 40 injected and 40 clean test rows, same frozen probe (layer 9, threshold 0.431), CPU.
+- `harness` = a coding-agent system prompt with 12 tool schemas (1,770 tokens).
+- `full` = the harness prompt plus three earlier file reads (4,491 tokens).
+
+| Read position | AUROC | Injected caught | Clean false alarms |
+|---|---|---|---|
+| **Sidecar (Anchor's own frame)** | **0.878** | **31/40** | 12/40 |
+| In-agent, harness prompt | 0.667 | 10/40 | 6/40 |
+| In-agent, harness + file reads | 0.651 | 1/40 | 0/40 |
+| In-agent, harness + file reads, Δ vs context without this output | 0.761 | 2/40 | 0/40 |
+
+Inside a 4.5k-token agent context the probe catches 1 of 40 injections. That is the OpenCode failure, reproduced.
+
+**False alarms explained (`v2/offline/sidecar_family_eval.py` → `out/qwen0.5b/sidecar_by_family.json`).**
+`probe.json` was trained on 1,434 MVP-era rows. `rows.jsonl` now has 2,872 rows: H1 added attack families and
+matching benign families, and the probe was never retrained on them.
+
+| Rows | Injected caught | Clean false alarms |
+|---|---|---|
+| Families the probe was trained on | **19/20** | **1/19** |
+| H1 families added later | 12/20 | 11/21 |
+
+**Action:** finish H1 by re-extracting and retraining the probe on the current dataset (`extract.py` →
+`train_probe.py`). This rewrites `probe.json` and every score downstream, so the team should agree before it runs.
 
 ## Measured so far (all from runs on this Mac)
 - **Mac parity.** Scores on 24 test rows match `out/qwen0.5b/scores.json` to within 4e-5 on CPU and 3e-5 on MPS.
@@ -177,7 +197,7 @@ Start the service, then:
   not touched yet).
 
 ## Next, in order
-1. Finish `long_context_eval.py` and record its numbers above.
+1. ~~Long-context eval~~ (done; above). **Retrain the probe on the H1 dataset** (team decision; it rewrites `probe.json`).
 2. Run `steer_eval.py` and record the hijack rate off vs on and clean completion.
 3. ~~Python tests~~ (done, 9/9). ~~OFF and ON scripted room runs~~ (done). Try the `gemini` and `local` brains.
 5. Live OpenCode and OpenClaw runs against the service, if the CLIs can be installed.
