@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "icon-tile-stack",
+        "value": "*",
+        "files": [
+          "v2/room/public/index.html"
+        ],
+        "createdAt": "2026-11-21T09:45:11.297Z",
+        "reason": "Claude: the 34px anchor logo is the app brand mark sitting beside the header h1 in a flex row (verified in screenshots at 1440/800/375 px), not a feature-card tile stacked above a heading"
+      }
+    ]
+  }
+}
