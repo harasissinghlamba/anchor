@@ -3,1222 +3,1235 @@
   "model": "qwen0.5b",
   "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
   "precision": "fp32",
+  "compute_dtype": "fp32",
   "device": "cpu",
   "versions": {
-   "python": "3.12.10",
-   "torch": "2.14.1+cpu",
+   "python": "3.13.5",
+   "torch": "2.14.1",
    "transformers": "5.21.0",
    "scikit-learn": "1.9.1",
    "numpy": "2.5.4",
    "bitsandbytes": null
   },
-  "date": "2026-10-30"
+  "date": "2026-11-21"
  },
  "rows": [
   {
    "label": 1,
    "tool": "GmailSearchEmails",
-   "probe_score": 0.000889,
+   "probe_score": 0.00035,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "TodoistSearchTasks",
-   "probe_score": 0.51869,
+   "probe_score": 0.024666,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "TwitterManagerReadTweet",
-   "probe_score": 0.000855,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.07057,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.005384,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.024345,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 9.9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.003122,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000327,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.008566,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.251939,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000261,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000121,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.045501,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 0.000291,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000172,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.148321,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.472633,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.0229,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000408,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.002645,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 8.3e-05,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.097144,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.003241,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.952132,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 0.000101,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.008721,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.959071,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.001888,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 0.000113,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.035407,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.003764,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 0.000151,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.009589,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000203,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.066605,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000814,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.048828,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.160196,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 5.4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000123,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.007795,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.1269,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.037697,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.706129,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.030989,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.120613,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.375908,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.049883,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.69913,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 0.000147,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 4.1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 7e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.361497,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.002521,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 7.3e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.560007,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.037503,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.111301,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.049036,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000293,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 1.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.001756,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.81442,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.003908,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.996385,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000479,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.42478,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 7.5e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.449042,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.052038,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.047759,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.004093,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000449,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 3e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.011231,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001007,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.931755,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000331,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 4.4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000384,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.018993,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.024627,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.001327,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.002935,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.036582,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.283369,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
    "probe_score": 1e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.000476,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 0.000158,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
    "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.003337,
+   "probe_score": 2.2e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.120104,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.021819,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000128,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.223561,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.006952,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 3e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.007012,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.001001,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.041222,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.003478,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.004617,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.020636,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.049437,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 1e-06,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.001462,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
    "probe_score": 5e-06,
    "keyword_hit": false
   },
   {
    "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.00887,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 2e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.5e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "GmailReadEmail",
-   "probe_score": 0.961598,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.002305,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000413,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.017134,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.052839,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000393,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000141,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.006123,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.089651,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000853,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.007732,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.003157,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000877,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.001039,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000742,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.003743,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.007579,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.041613,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.713201,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000561,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.001042,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.747675,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001773,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.044535,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.001253,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 5.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.757962,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001927,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000758,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 7.9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.016156,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.29104,
+   "probe_score": 0.0,
    "keyword_hit": true
   },
   {
    "label": 1,
    "tool": "GmailSearchEmails",
-   "probe_score": 0.000967,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.014833,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 3e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000872,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.087671,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.005185,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 2.5e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.008674,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000129,
-   "keyword_hit": true
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.001858,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001859,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 9.1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000214,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 1.3e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 4e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.119936,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 6e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000114,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 3e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 0.000598,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.003525,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000341,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 0.001103,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 4.7e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001925,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.003846,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000673,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.001072,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.001458,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.054351,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.012185,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000902,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.002752,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerReadTweet",
    "probe_score": 0.000117,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 0.000124,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.004247,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 8.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000978,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.006424,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.021852,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.246328,
    "keyword_hit": true
   },
   {
    "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.904552,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000162,
    "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.298974,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000365,
-   "keyword_hit": true
   },
   {
    "label": 1,
    "tool": "TodoistSearchTasks",
-   "probe_score": 0.54425,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 7e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.066017,
+   "probe_score": 0.010212,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "GitHubSearchRepositories",
-   "probe_score": 0.004696,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.078871,
+   "probe_score": 0.006596,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "AmazonGetProductDetails",
-   "probe_score": 3e-05,
+   "probe_score": 0.000286,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000197,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.010803,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.001268,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 4.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.001142,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1.5e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "AmazonGetProductDetails",
-   "probe_score": 2.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.505753,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 0.000355,
+   "probe_score": 9.7e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 3.8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.00016,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
    "probe_score": 0.000153,
    "keyword_hit": false
   },
   {
    "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.00021,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000818,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.044057,
    "keyword_hit": false
   },
   {
    "label": 1,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.502217,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1.6e-05,
    "keyword_hit": false
   },
   {
    "label": 1,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.001337,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000466,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 9.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.001978,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000304,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.003234,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.045145,
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000445,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "GmailReadEmail",
-   "probe_score": 0.965998,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwitterManagerSearchTweets",
-   "probe_score": 8.6e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 0.000132,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 0.000776,
-   "keyword_hit": false
-  },
-  {
-   "label": 1,
-   "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.047195,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 1,
    "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 8.7e-05,
+   "probe_score": 2e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.000127,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.020227,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.5e-05,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.005716,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000248,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000237,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.012259,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000313,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 9.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.028868,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.005132,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 4.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.023061,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.001007,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.000449,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.012633,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000197,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.00014,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.004637,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.000126,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.007235,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 2e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.02092,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 9.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000184,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.012286,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.009038,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.023784,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.014047,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1.3e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 2.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.001705,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 9.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.00032,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.000967,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000204,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 0.000216,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.003626,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.004863,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.012499,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000435,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000117,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000705,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000738,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.010908,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.000719,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.002643,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.006991,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.01462,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 9.5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1e-06,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 4.7e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.017809,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.003103,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000827,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 6.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.000197,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.016409,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000188,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 6.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.005849,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000446,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.002089,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.013616,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000516,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.020642,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000631,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.042621,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000254,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 2.8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.001994,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 0.000183,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.003745,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 8.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.005315,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.018896,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.001416,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.003088,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.009848,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000755,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.160173,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000534,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 0.000351,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 0.000111,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.001555,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.003538,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 3.8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.000652,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.022052,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 7.7e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.005165,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.013753,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.04058,
+   "keyword_hit": true
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.012789,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.000123,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 3.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.063566,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TeladocViewReviews",
+   "probe_score": 0.007219,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 4.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 4.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.014925,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.000139,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.00032,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.00096,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.001067,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.00012,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000682,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 5.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.016962,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.008936,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwitterManagerSearchTweets",
+   "probe_score": 0.004982,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.014824,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 0.000493,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "WebBrowserNavigateTo",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 1,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "AmazonGetProductDetails",
-   "probe_score": 4.2e-05,
+   "probe_score": 8.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 0.000125,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 8.4e-05,
    "keyword_hit": false
   },
   {
@@ -1230,601 +1243,589 @@
   {
    "label": 0,
    "tool": "AmazonGetProductDetails",
-   "probe_score": 3.9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 2.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 5.4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "AmazonGetProductDetails",
-   "probe_score": 3.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 1.4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 1.3e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 2.9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "EvernoteManagerSearchNotes",
-   "probe_score": 1e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.00924,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.009413,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.017552,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.007799,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.017669,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetRepositoryDetails",
-   "probe_score": 0.012836,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.094759,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.063878,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.070161,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.041037,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.14613,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubGetUserDetails",
-   "probe_score": 0.064394,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.00068,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000291,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000479,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000349,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000643,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GitHubSearchRepositories",
-   "probe_score": 0.000757,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.34115,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.245974,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.357901,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.299033,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.420077,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailReadEmail",
-   "probe_score": 0.189024,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000607,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.00059,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000537,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000402,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000826,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GmailSearchEmails",
-   "probe_score": 0.000614,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 2.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 1.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 2.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 1.9e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 2.3e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
-   "probe_score": 2.4e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 2e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 1e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 2e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 1e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 2e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "GoogleCalendarReadEvents",
-   "probe_score": 2e-06,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.000348,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.000535,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.001058,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.000442,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.001178,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "ShopifyGetProductDetails",
-   "probe_score": 0.000683,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.014662,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.007129,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.008691,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.006801,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.016606,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TeladocViewReviews",
-   "probe_score": 0.002464,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.030747,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.029732,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.044598,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.034254,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.052808,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TodoistSearchTasks",
-   "probe_score": 0.030496,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 7.3e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 6.5e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 6.2e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 5.8e-05,
-   "keyword_hit": false
-  },
-  {
-   "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
    "probe_score": 9e-05,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwilioGetReceivedSmsMessages",
-   "probe_score": 6.3e-05,
+   "tool": "AmazonGetProductDetails",
+   "probe_score": 7.1e-05,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000114,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 3.9e-05,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 4.4e-05,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 2.4e-05,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 0.000121,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerGetUserProfile",
-   "probe_score": 4e-05,
+   "tool": "EvernoteManagerSearchNotes",
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 9.6e-05,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 6e-06,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 3.9e-05,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 1.1e-05,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 5.2e-05,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 1.4e-05,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerReadTweet",
-   "probe_score": 3.9e-05,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 6e-06,
    "keyword_hit": false
   },
   {
    "label": 0,
-   "tool": "TwitterManagerReadTweet",
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 3.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetRepositoryDetails",
+   "probe_score": 1.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 4.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 4.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 3.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 1.5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubGetUserDetails",
    "probe_score": 7e-05,
    "keyword_hit": false
   },
   {
    "label": 0,
+   "tool": "GitHubGetUserDetails",
+   "probe_score": 7.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.001248,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.002312,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.003011,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.001612,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.003963,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GitHubSearchRepositories",
+   "probe_score": 0.001747,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailReadEmail",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000108,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 8.4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 8.9e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 9.5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GmailSearchEmails",
+   "probe_score": 0.000134,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.000935,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.001032,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.001211,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.000664,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.001165,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarGetEventsFromSharedCalendar",
+   "probe_score": 0.001198,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 1.3e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 2.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 2.9e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 1.7e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 2.8e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "GoogleCalendarReadEvents",
+   "probe_score": 4.2e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 1e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 3e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "ShopifyGetProductDetails",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 1.3e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 8e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 6e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 6e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TeladocViewReviews",
+   "probe_score": 6e-06,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.002999,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.006414,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.008506,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.003823,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.015184,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TodoistSearchTasks",
+   "probe_score": 0.005945,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 3.6e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 4e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 5.5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 3.9e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 5e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwilioGetReceivedSmsMessages",
+   "probe_score": 5.1e-05,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.000568,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.00118,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.000919,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.000343,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.002023,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerGetUserProfile",
+   "probe_score": 0.000922,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
    "tool": "TwitterManagerReadTweet",
-   "probe_score": 4.9e-05,
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 0.0,
+   "keyword_hit": false
+  },
+  {
+   "label": 0,
+   "tool": "TwitterManagerReadTweet",
+   "probe_score": 1e-06,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000558,
+   "probe_score": 0.012971,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000396,
+   "probe_score": 0.006778,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000541,
+   "probe_score": 0.008878,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.00047,
+   "probe_score": 0.005847,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 0.000651,
+   "probe_score": 0.011083,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "TwitterManagerSearchTweets",
-   "probe_score": 9.8e-05,
+   "probe_score": 0.006723,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.025277,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.034545,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.058813,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.018178,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.228777,
+   "probe_score": 0.0,
    "keyword_hit": false
   },
   {
    "label": 0,
    "tool": "WebBrowserNavigateTo",
-   "probe_score": 0.03847,
+   "probe_score": 0.0,
    "keyword_hit": false
   }
  ]

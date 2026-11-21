@@ -1,0 +1,13 @@
+{
+  "name": "@anchor-ai/openclaw",
+  "version": "0.1.0",
+  "description": "Anchor task-drift firewall plugin for OpenClaw.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist", "openclaw.plugin.json"],
+  "openclaw": { "extensions": ["./dist/index.js"] },
+  "dependencies": { "@anchor-ai/sdk": "0.1.0" }
+}

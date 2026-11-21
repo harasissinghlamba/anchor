@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "anchor-room",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd v2 && HF_HUB_OFFLINE=1 ANCHOR_DEVICE=mps ANCHOR_PORT=8765 offline/.venv/bin/python -m anchor.service"],
+      "port": 8765
+    }
+  ]
+}

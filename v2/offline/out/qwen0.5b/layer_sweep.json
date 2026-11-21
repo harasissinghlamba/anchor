@@ -3,37 +3,68 @@
     "model": "qwen0.5b",
     "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
     "precision": "fp32",
+    "compute_dtype": "fp32",
     "device": "cpu",
     "versions": {
-      "python": "3.12.10",
-      "torch": "2.14.1+cpu",
+      "python": "3.13.5",
+      "torch": "2.14.1",
       "transformers": "5.21.0",
       "scikit-learn": "1.9.1",
       "numpy": "2.5.4",
       "bitsandbytes": null
     },
-    "date": "2026-10-30"
+    "date": "2026-11-21"
   },
   "sweep": [
     {
+      "position": "start",
       "layer": 6,
-      "val_auroc": 0.9652
+      "val_auroc": 0.9248
     },
     {
+      "position": "start",
       "layer": 9,
-      "val_auroc": 0.9859
+      "val_auroc": 0.9171
     },
     {
+      "position": "start",
       "layer": 12,
-      "val_auroc": 0.9697
+      "val_auroc": 0.9351
     },
     {
+      "position": "start",
       "layer": 15,
-      "val_auroc": 0.9586
+      "val_auroc": 0.9229
     },
     {
+      "position": "start",
       "layer": 18,
-      "val_auroc": 0.965
+      "val_auroc": 0.8839
+    },
+    {
+      "position": "end",
+      "layer": 6,
+      "val_auroc": 0.783
+    },
+    {
+      "position": "end",
+      "layer": 9,
+      "val_auroc": 0.793
+    },
+    {
+      "position": "end",
+      "layer": 12,
+      "val_auroc": 0.803
+    },
+    {
+      "position": "end",
+      "layer": 15,
+      "val_auroc": 0.792
+    },
+    {
+      "position": "end",
+      "layer": 18,
+      "val_auroc": 0.7859
     }
   ]
 }

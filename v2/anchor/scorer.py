@@ -25,7 +25,8 @@ from common import MAX_OUTPUT_TOKENS, load_model, load_probe  # noqa: E402
 
 TIMEOUT_S = 30.0
 PROBE_VERSION = "v2"
-SENTENCE = re.compile(r"[^.!?\n]+(?:[.!?]+|\n|$)")
+# A sentence ends at .!? followed by whitespace or the end, or at a line break: "a@b.example" and "2.5" stay whole.
+SENTENCE = re.compile(r"\S[^\n]*?(?:[.!?]+(?=\s|$)|(?=\n)|$)")
 
 
 def sentences(text):
