@@ -171,3 +171,13 @@ def test_sentence_splitter_keeps_emails_and_decimals_whole():
     t = "Contact accounts@northwind.example. Version 2.5 is out!\nNew line here"
     assert [t[a:b] for a, b in sentences(t)] == ["Contact accounts@northwind.example.", "Version 2.5 is out!",
                                                  "New line here"]
+
+
+def test_unusable_brain_action_is_never_executed(client, tmp_path, monkeypatch):
+    monkeypatch.setattr("room.runner.RUNS", tmp_path)
+    from room.brains import ScriptedBrain
+    real = ScriptedBrain.act
+    monkeypatch.setattr(ScriptedBrain, "act", lambda self, role, task, doc, session=None:
+                        ({}, "garbled") if role == "comms" else real(self, role, task, doc, session))
+    st = run_room(client, "off")
+    assert not any(e["tool"] == "send_email" for e in st["ledger"]) and st["tally"]["invalid"] == 1

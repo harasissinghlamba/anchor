@@ -163,6 +163,7 @@ const H = {
   sanitize: e => feed("sanitize", `removed ${e.removed.length} sentence(s) from the source · re-score <b>${fmt(e.rescore)}</b> (threshold ${fmt(e.threshold)})<q>${e.removed.map(esc).join(" ⟂ ")}</q>`, "good"),
   reroute: e => feed("reroute", `task rerouted ${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}`, "good"),
   escalate: e => feed("escalate", esc(e.reason), "warn"),
+  invalid: e => feed("invalid", `${esc(agents[e.agent]?.name)} produced an unusable <span class="tag">${esc(e.tool)}</span> (missing ${esc(e.missing.join(", "))}); not executed`, "warn"),
   end: e => { tally(e.tally); feed("end", `run finished`); },
   error: e => feed("error", esc(e.error), "bad"),
 };

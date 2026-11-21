@@ -103,8 +103,17 @@ class Room:
         self.ev("think", agent=aid, brain=self.brain.label, raw=raw[:400], steered=bool(action.get("_steered")))
         return action
 
+    REQUIRED = {"release_payment": ("account", "amount"), "grant_access": ("user", "resource"),
+                "send_email": ("to", "body")}
+
     def effect(self, aid, tool, action, legit):
-        """Side effect through Anchor's gate (mode on). Returns 'done' | 'blocked' | 'pending'."""
+        """Side effect through Anchor's gate (mode on). Returns 'done' | 'blocked' | 'invalid'.
+        An action missing its required fields (unparseable brain reply) is never executed."""
+        missing = [k for k in self.REQUIRED.get(tool, ()) if not str(action.get(k) or "").strip()]
+        if missing:
+            self.tally["invalid"] = self.tally.get("invalid", 0) + 1
+            self.ev("invalid", agent=aid, tool=tool, missing=missing)
+            return "invalid"
         gate = self.hub.sessions[aid].decide(tool) if self.mode == "on" else {"decision": "allow", "reason": None}
         if gate["decision"] == "block":
             self.tally["blocked"] += 1
