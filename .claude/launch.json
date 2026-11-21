@@ -6,6 +6,12 @@
       "runtimeExecutable": "/bin/sh",
       "runtimeArgs": ["-c", "cd v2 && HF_HUB_OFFLINE=1 ANCHOR_DEVICE=mps ANCHOR_PORT=8765 offline/.venv/bin/python -m anchor.service"],
       "port": 8765
+    },
+    {
+      "name": "anchor-room-8766",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd v2 && HF_HUB_OFFLINE=1 ANCHOR_DEVICE=mps ANCHOR_PORT=8766 offline/.venv/bin/python -m anchor.service"],
+      "port": 8766
     }
   ]
 }

@@ -1,179 +1,526 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anchor Control Room</title>
 <style>
-:root{--bg:#f4f5f7;--panel:#fff;--ink:#14161a;--mute:#5d6470;--line:#dde1e7;--clean:#1f9d55;--watch:#c27c0e;--taint:#d63c3c;--quar:#7a808a;--accent:#2f5bea;--edge:#b9c0cc;--chip:#eef1f5}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f13;--panel:#161a20;--ink:#e8ebf0;--mute:#97a0ad;--line:#262c35;--clean:#3ccf7e;--watch:#f0a73a;--taint:#ff5c5c;--quar:#6b7280;--accent:#6d8cff;--edge:#3a424e;--chip:#1e232b}}
-:root[data-theme="dark"]{--bg:#0d0f13;--panel:#161a20;--ink:#e8ebf0;--mute:#97a0ad;--line:#262c35;--clean:#3ccf7e;--watch:#f0a73a;--taint:#ff5c5c;--quar:#6b7280;--accent:#6d8cff;--edge:#3a424e;--chip:#1e232b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel)}
-h1{font-size:18px;margin:0;letter-spacing:.2px}h1 span{color:var(--mute);font-weight:500}
-.meta{color:var(--mute);font:12px ui-monospace,Menlo,monospace}
+:root{
+  --bg:#f3f5f9;--bg2:#e9edf4;--panel:#ffffff;--panel2:#f6f8fb;--line:#dfe4ec;--ink:#0f1522;--mute:#5d6678;--faint:#8a93a6;
+  --brand:#0e9fb0;--brand2:#2563eb;--clean:#159a55;--watch:#c27c0e;--taint:#dc3545;--human:#7c3aed;--quar:#7a808a;
+  --glow:0 0 0 rgba(0,0,0,0);--shadow:0 1px 2px rgba(15,21,34,.06),0 8px 24px rgba(15,21,34,.06);
+}
+:root[data-theme="dark"]{
+  --bg:#070a11;--bg2:#0b1019;--panel:#0f1521;--panel2:#131a28;--line:#1e2738;--ink:#e9eef7;--mute:#97a1b5;--faint:#64708a;
+  --brand:#38d6e6;--brand2:#6d8cff;--clean:#35d688;--watch:#ffb224;--taint:#ff4d5e;--human:#a78bfa;--quar:#6b7280;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1200px 500px at 10% -10%,color-mix(in srgb,var(--brand) 10%,transparent),transparent 60%),radial-gradient(900px 500px at 100% 0%,color-mix(in srgb,var(--brand2) 9%,transparent),transparent 60%),var(--bg);min-height:100vh}
+button,select{font:inherit;color:inherit}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.wrap{max-width:1440px;margin:0 auto;padding:0 20px}
+
+/* top bar */
+header{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 6px 18px color-mix(in srgb,var(--brand) 35%,transparent)}
+.brand{flex-wrap:wrap;min-width:0}.brand h1{font-size:17px;margin:0;letter-spacing:.2px;white-space:nowrap}
+#model{max-width:100%;overflow:hidden;text-overflow:ellipsis}.brand h1 b{font-weight:800}.brand h1 span{color:var(--mute);font-weight:500}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:4px 10px;font-size:12px;color:var(--mute);white-space:nowrap}
+.live{color:var(--faint)}.live i{width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.live.on{color:var(--clean);border-color:color-mix(in srgb,var(--clean) 40%,var(--line))}.live.on i{background:var(--clean);animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
 .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-button,select{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:7px 12px;cursor:pointer}
-button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-button:disabled{opacity:.5;cursor:default}
-.toggle{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}.toggle button{border:0;border-radius:0}
-.toggle button.on{background:var(--ink);color:var(--panel)}
-main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:16px;padding:16px 20px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
-.panel h2{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--mute);margin:0 0 10px}
-#room{position:relative;height:460px}
-#edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.agent{position:absolute;width:190px;transform:translate(-50%,-50%);background:var(--panel);border:2px solid var(--clean);border-radius:12px;padding:9px 11px;transition:border-color .3s,opacity .3s,box-shadow .3s}
-.agent.watch{border-color:var(--watch)}.agent.tainted{border-color:var(--taint);box-shadow:0 0 0 4px color-mix(in srgb,var(--taint) 20%,transparent)}
-.agent.off{border-color:var(--edge)}.agent.quarantined{border-style:dashed;border-color:var(--quar);opacity:.6}
-.agent .n{font-weight:650}.agent .r{color:var(--mute);font-size:12px;margin-top:2px;min-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{display:inline-block;font-size:11px;font-weight:650;padding:1px 7px;border-radius:99px;background:var(--chip);color:var(--mute);margin-left:4px;vertical-align:1px}
-.badge.tainted{background:var(--taint);color:#fff}.badge.watch{background:var(--watch);color:#fff}.badge.clean{background:color-mix(in srgb,var(--clean) 18%,transparent);color:var(--clean)}
-.bar{position:relative;height:6px;background:var(--chip);border-radius:3px;margin-top:7px}
-.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--clean);transition:width .4s}
-.bar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.6}
-.score{font:11px ui-monospace,Menlo,monospace;color:var(--mute);margin-top:3px}
-#feed{height:460px;overflow:auto;display:flex;flex-direction:column-reverse;gap:6px}
-.ev{border-left:3px solid var(--edge);padding:4px 8px;font-size:13px}
-.ev.bad{border-color:var(--taint)}.ev.good{border-color:var(--clean)}.ev.warn{border-color:var(--watch)}
-.ev .k{font:11px ui-monospace,Menlo,monospace;color:var(--mute)}.ev q{color:var(--mute);display:block;font-size:12px;quotes:none;overflow-wrap:anywhere}
-.bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:0 20px 20px}
-table{width:100%;border-collapse:collapse;font-size:13px}td{padding:5px 4px;border-top:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
-tr.attacker td{color:var(--taint);font-weight:600}
-.tally{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.stat{background:var(--chip);border-radius:10px;padding:10px}.stat .v{font-size:24px;font-weight:700}.stat .l{color:var(--mute);font-size:12px}
-.stat.bad .v{color:var(--taint)}
-.appr{border:1px solid var(--watch);border-radius:10px;padding:10px;margin-bottom:8px}
-.appr .acts{display:flex;gap:8px;margin-top:8px}
-.empty{color:var(--mute);font-size:13px}
-.tag{font:11px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:4px;background:var(--chip);color:var(--mute)}
-@media (max-width:900px){main,.bottom{grid-template-columns:minmax(0,1fr)}#room{height:620px}.agent{width:150px}header,main,.bottom{padding-left:16px;padding-right:16px}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:transparent;padding:7px 11px;cursor:pointer;color:var(--mute);font-size:13px}
+.seg button.on{background:var(--ink);color:var(--bg);font-weight:650}
+.seg .lbl{padding:7px 10px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--faint);border-right:1px solid var(--line)}
+select{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:7px 10px;font-size:13px}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:650}
+.btn.go{background:linear-gradient(135deg,var(--brand),var(--brand2));border:0;color:#fff;box-shadow:0 6px 18px color-mix(in srgb,var(--brand2) 30%,transparent)}
+.btn:disabled{opacity:.45;cursor:default}
+.icon{width:16px;height:16px;display:inline-block;vertical-align:-3px}
+
+/* scenario rail */
+.rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:16px 0 0}
+.scn{position:relative;text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:12px 12px 12px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;box-shadow:var(--shadow)}
+.scn:hover{transform:translateY(-2px)}
+.scn.sel{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 25%,transparent),var(--shadow)}
+.scn .t{font-weight:700;font-size:13.5px;margin:8px 0 3px;display:flex;align-items:center;gap:8px}
+.gl{width:24px;height:24px;flex:none;border-radius:7px;display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--panel2);border:1px solid var(--line)}
+.gl.attack{color:var(--taint)}.gl.clean{color:var(--clean)}.gl.mixed{color:var(--brand2)}.scn .d{color:var(--mute);font-size:12px;line-height:1.35}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:99px}
+.tag.attack{background:color-mix(in srgb,var(--taint) 16%,transparent);color:var(--taint)}
+.tag.clean{background:color-mix(in srgb,var(--clean) 16%,transparent);color:var(--clean)}
+.tag.mixed{background:color-mix(in srgb,var(--brand2) 18%,transparent);color:var(--brand2)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);min-width:0}
+.stat .v{font-size:30px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat .l{color:var(--mute);font-size:12.5px;margin-top:4px}
+.stat.big{background:linear-gradient(135deg,color-mix(in srgb,var(--clean) 14%,var(--panel)),var(--panel))}
+.stat.big .v{font-size:36px;color:var(--clean)}
+.stat.bad .v{color:var(--taint)}.stat.hum .v{color:var(--human)}
+.stat .s{font-size:11.5px;color:var(--faint);margin-top:2px}
+
+/* main grid */
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(330px,1fr);gap:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);min-width:0;overflow:hidden}
+.ph{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.ph h2{margin:0;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mute)}
+.ph h2 b{color:var(--ink)}
+.ph .sp{margin-left:auto}
+.status{white-space:nowrap;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--panel2);color:var(--mute)}
+.status.calm{color:var(--clean);background:color-mix(in srgb,var(--clean) 12%,transparent)}
+.status.watch{color:var(--watch);background:color-mix(in srgb,var(--watch) 14%,transparent)}
+.status.breach{color:var(--taint);background:color-mix(in srgb,var(--taint) 14%,transparent)}
+.status.off{color:var(--faint)}
+
+/* room */
+.roomwrap{position:relative}
+#room{display:block;width:100%;height:auto}
+.banner{position:absolute;left:14px;right:14px;top:12px;display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:12px;background:color-mix(in srgb,var(--panel2) 92%,transparent);border:1px solid var(--line);font-size:13px;opacity:0;transform:translateY(-6px);transition:all .3s;pointer-events:none}
+.banner.show{opacity:1;transform:none}
+.banner .n{font-weight:800;color:var(--brand)}
+.banner q{quotes:none;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+svg .edge{fill:none;stroke:var(--line);stroke-width:2}
+svg .edge.hot{stroke:var(--watch);stroke-dasharray:6 5}
+svg .edge.taint{stroke:var(--taint);stroke-dasharray:6 5}
+svg .node{cursor:pointer;transition:opacity .4s}
+svg .node .disc{fill:var(--panel2);stroke:var(--line);stroke-width:1.5}
+svg .node .track{fill:none;stroke:var(--line);stroke-width:5}
+svg .node .ring{fill:none;stroke:var(--clean);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .6s,stroke .3s}
+svg .node .halo{fill:none;stroke:transparent;stroke-width:10;opacity:.35}
+svg .node.watch .ring{stroke:var(--watch)}svg .node.watch .halo{stroke:var(--watch);animation:pulse 1.6s infinite}
+svg .node.tainted .ring{stroke:var(--taint)}svg .node.tainted .halo{stroke:var(--taint);animation:pulse 1.1s infinite}
+svg .node.quar{opacity:.45}svg .node.quar .disc{stroke-dasharray:4 4;stroke:var(--quar)}
+svg .node.sel .disc{stroke:var(--brand);stroke-width:3}
+svg .node.idle{opacity:.28}
+svg .node .ini{fill:var(--ink);font-weight:800;font-size:15px;text-anchor:middle;dominant-baseline:central}
+svg .node .nm{fill:var(--ink);font-weight:650;font-size:13px;text-anchor:middle}
+svg .node .st{fill:var(--mute);font-size:11.5px;text-anchor:middle}
+svg .node .sc{font-size:11px;text-anchor:middle;font-family:ui-monospace,Menlo,monospace;fill:var(--mute)}
+svg .packet{filter:drop-shadow(0 0 6px currentColor)}
+@keyframes pulse{50%{opacity:.05}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* lens */
+.lens{padding:14px;display:flex;flex-direction:column;gap:12px;max-height:620px;overflow:auto}
+.who{display:flex;gap:12px;align-items:center}
+.av{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:800;background:var(--panel2);border:1px solid var(--line)}
+.who .n{font-weight:750;font-size:16px}.who .r{color:var(--mute);font-size:12.5px}
+.lvl{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:99px;margin-left:auto}
+.lvl.clean{background:color-mix(in srgb,var(--clean) 15%,transparent);color:var(--clean)}
+.lvl.watch{background:color-mix(in srgb,var(--watch) 18%,transparent);color:var(--watch)}
+.lvl.tainted{background:color-mix(in srgb,var(--taint) 18%,transparent);color:var(--taint)}
+.lvl.off{background:var(--panel2);color:var(--faint)}
+.box{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel2)}
+.box .k{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);margin-bottom:5px;display:flex;gap:8px;align-items:center}
+.task{font-weight:600}
+.meter{position:relative;height:12px;border-radius:7px;background:linear-gradient(90deg,color-mix(in srgb,var(--clean) 22%,transparent),color-mix(in srgb,var(--watch) 25%,transparent) 60%,color-mix(in srgb,var(--taint) 30%,transparent));margin:8px 0 4px}
+.meter .pin{position:absolute;top:-4px;width:4px;height:20px;border-radius:2px;background:var(--ink);transform:translateX(-2px);transition:left .6s;box-shadow:0 0 0 3px var(--panel2)}
+.meter .mk{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--ink);opacity:.4}
+.mlab{display:flex;justify-content:space-between;font-size:11px;color:var(--faint)}
+.big-score{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.doc{font-size:12.5px;line-height:1.55;color:var(--mute);max-height:170px;overflow:auto}
+.doc mark{background:color-mix(in srgb,var(--taint) calc(var(--h)*70%),transparent);color:var(--ink);border-radius:3px;padding:0 1px}
+.code{font:12px/1.45 ui-monospace,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);max-height:130px;overflow:auto}
+.empty{color:var(--faint);font-size:13px}
+.src{font:11.5px ui-monospace,Menlo,monospace;color:var(--brand)}
+
+/* bottom */
+.bottom{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:14px;margin:14px 0 28px}
+.feed{max-height:360px;overflow:auto;padding:6px 8px}
+.ev{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:start;padding:7px 6px;border-bottom:1px dashed var(--line);font-size:13px}
+.ev:last-child{border-bottom:0}
+.ev .ic{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;background:var(--panel2)}
+.ev .tx{min-width:0;overflow-wrap:anywhere}.ev .tx small{display:block;color:var(--faint);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev .tm{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+.ev.bad .ic{background:color-mix(in srgb,var(--taint) 18%,transparent);color:var(--taint)}
+.ev.warn .ic{background:color-mix(in srgb,var(--watch) 18%,transparent);color:var(--watch)}
+.ev.good .ic{background:color-mix(in srgb,var(--clean) 18%,transparent);color:var(--clean)}
+.ev.hum .ic{background:color-mix(in srgb,var(--human) 18%,transparent);color:var(--human)}
+.verdicts{padding:10px;display:flex;flex-direction:column;gap:8px;max-height:360px;overflow:auto}
+.vd{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;align-items:center;background:var(--panel2)}
+.vd .b{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:3px 8px;border-radius:99px;grid-row:span 2}
+.vd .b.ok{background:color-mix(in srgb,var(--clean) 15%,transparent);color:var(--clean)}
+.vd .b.stop{background:color-mix(in srgb,var(--brand2) 18%,transparent);color:var(--brand2)}
+.vd .b.bad{background:color-mix(in srgb,var(--taint) 18%,transparent);color:var(--taint)}
+.vd .b.hold{background:color-mix(in srgb,var(--watch) 18%,transparent);color:var(--watch)}
+.vd .t{font-weight:650;font-size:13px}.vd .s{font-size:12px;color:var(--mute)}
+.ledger{padding:6px 12px;max-height:360px;overflow:auto}
+.lr{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.lr:last-child{border-bottom:0}.lr .w{min-width:0;overflow-wrap:anywhere}.lr .w small{display:block;color:var(--faint)}
+.lr.hijack{color:var(--taint);font-weight:650}
+
+/* approval modal */
+.modal{position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:16px;background:color-mix(in srgb,#000 55%,transparent);backdrop-filter:blur(6px)}
+.modal.show{display:grid}
+.card{width:min(560px,100%);background:var(--panel);border:1px solid color-mix(in srgb,var(--human) 50%,var(--line));border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 6px color-mix(in srgb,var(--human) 14%,transparent);overflow:hidden;animation:pop .28s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.card .top{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,color-mix(in srgb,var(--human) 22%,var(--panel)),var(--panel))}
+.card .top h3{margin:0;font-size:17px}.card .top p{margin:2px 0 0;color:var(--mute);font-size:13px}
+.ring{width:46px;height:46px;flex:none}
+.card .body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.ask{font-size:22px;font-weight:800;letter-spacing:-.3px;overflow-wrap:anywhere}
+.ask small{display:block;font-size:13px;font-weight:500;color:var(--mute);letter-spacing:0;margin-top:3px}
+.why{display:flex;flex-direction:column;gap:6px}
+.why div{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:8px 10px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}
+.why b{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;padding:2px 7px;border-radius:99px;flex:none}
+.why .anchor b{background:color-mix(in srgb,var(--watch) 18%,transparent);color:var(--watch)}
+.why .policy b{background:color-mix(in srgb,var(--human) 18%,transparent);color:var(--human)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px 18px}
+.acts button{border:0;border-radius:12px;padding:13px;font-weight:800;font-size:15px;cursor:pointer}
+.acts .ok{background:var(--clean);color:#04130a}.acts .no{background:var(--taint);color:#fff}
+.queue{font-size:12px;color:var(--faint);text-align:center;padding:0 0 12px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:40;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);font-weight:650;transition:all .35s;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.toast.bad{border-color:var(--taint);color:var(--taint)}.toast.good{border-color:var(--clean);color:var(--clean)}
+.theme{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:7px 9px;cursor:pointer;color:var(--mute)}
+
+@media (max-width:1180px){.rail{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{grid-template-columns:repeat(4,minmax(0,1fr))}.hero .big{grid-column:span 4}.grid{grid-template-columns:minmax(0,1fr)}.bottom{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.bottom .panel:first-child{grid-column:span 2}}
+@media (max-width:720px){.wrap{padding:0 16px}.rail{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:repeat(2,minmax(0,1fr))}.hero .big{grid-column:span 2}.bottom{grid-template-columns:minmax(0,1fr)}.bottom .panel:first-child{grid-column:auto}.stat .v{font-size:24px}.stat.big .v{font-size:28px}.brand{margin-right:0;width:100%}.controls{width:100%}.seg .lbl{display:none}header{position:static}#brain{flex:1 1 100%;min-width:0}.btn.go{flex:1}}
 </style>
 </head>
 <body>
 <header>
-  <div><h1>Anchor <span>Control Room</span></h1><div class="meta" id="health">connecting…</div></div>
-  <div class="controls">
-    <div class="toggle" id="mode"><button data-v="off">Anchor OFF</button><button data-v="on" class="on">Anchor ON</button></div>
-    <select id="brain" aria-label="Agent brain"><option value="scripted">Agents: scripted</option><option value="ollama">Agents: Ollama (local, free)</option><option value="groq">Agents: Groq (free key)</option><option value="openrouter">Agents: OpenRouter (free key)</option><option value="gemini">Agents: Gemini</option><option value="local">Agents: Qwen (local, steerable)</option></select>
-    <button class="primary" id="run">Run workflow</button>
+  <div class="wrap bar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="5" r="2.5"/><path d="M12 7.5V21M5 13a7 7 0 0 0 14 0M8 11h8"/></svg></div>
+      <h1><b>Anchor</b> <span>Control Room</span></h1>
+      <span class="chip live" id="live"><i></i><span>idle</span></span>
+      <span class="chip mono" id="model" title="Reader model and probe operating points (probe.json, watch_band.json)">connecting…</span>
+    </div>
+    <div class="controls">
+      <div class="seg" id="mode" role="group" aria-label="Anchor"><span class="lbl">Anchor</span><button data-v="on" class="on">On</button><button data-v="off">Off</button></div>
+      <div class="seg" id="appr" role="group" aria-label="Human approval"><span class="lbl">Human</span><button data-v="critical" class="on">Critical decisions</button><button data-v="auto">Autopilot</button></div>
+      <select id="brain" aria-label="Agent brain">
+        <option value="scripted">Agents: scripted</option>
+        <option value="ollama">Agents: Ollama (local, free)</option>
+        <option value="groq">Agents: Groq (free key)</option>
+        <option value="openrouter">Agents: OpenRouter (free key)</option>
+        <option value="gemini">Agents: Gemini</option>
+        <option value="local">Agents: Qwen 0.5B (steerable)</option>
+      </select>
+      <button class="btn go" id="run">▶ Run simulation</button>
+      <button class="btn" id="stop" disabled>■ Stop</button>
+      <button class="theme" id="theme" aria-label="Toggle theme">◐</button>
+    </div>
   </div>
 </header>
-<main>
-  <section class="panel"><h2>Room</h2><div id="room"><svg id="edges"></svg></div></section>
-  <section class="panel"><h2>Live events</h2><div id="feed"></div></section>
-</main>
-<div class="bottom">
-  <section class="panel"><h2>Run tally</h2><div class="tally" id="tally"></div></section>
-  <section class="panel"><h2>Human approvals</h2><div id="approvals"><div class="empty">Nothing waiting.</div></div></section>
-  <section class="panel"><h2>Side-effect ledger</h2><table id="ledger"><tbody><tr><td class="empty">No side effects yet.</td></tr></tbody></table></section>
-</div>
-<script>
-const $ = s => document.querySelector(s), room = $("#room"), svg = $("#edges");
-let watchT = null, live_t = {}, mode = "on", runMode = "on", threshold = null, agents = {}, edges = [];
-const SLOTS = {intake:[14,50], it:[42,15], research:[42,50], finance:[72,50], comms:[42,85], "research-2":[60,78], "finance-2":[88,78]};
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const fmt = x => x == null ? "—" : Number(x).toFixed(3);
 
-document.querySelectorAll("#mode button").forEach(b => b.onclick = () => {
-  mode = b.dataset.v; document.querySelectorAll("#mode button").forEach(x => x.classList.toggle("on", x === b));
-});
+<main class="wrap">
+  <section class="rail" id="rail" aria-label="Simulations"></section>
+
+  <section class="hero" aria-label="Run totals">
+    <div class="stat big"><div class="v" id="h-rupees">₹0</div><div class="l">kept from attackers this run</div><div class="s" id="h-rupees-s">payouts and refunds a hijacked agent tried to send</div></div>
+    <div class="stat"><div class="v" id="h-stopped">0</div><div class="l">hijacks stopped</div><div class="s" id="h-stopped-s">by Anchor or a person</div></div>
+    <div class="stat bad"><div class="v" id="h-landed">0</div><div class="l">hijacks landed</div><div class="s">attacker's action executed</div></div>
+    <div class="stat hum"><div class="v" id="h-human">0</div><div class="l">human decisions</div><div class="s" id="h-human-s">0 policy · 0 Anchor</div></div>
+    <div class="stat"><div class="v" id="h-false">0</div><div class="l">legit actions blocked</div><div class="s" id="h-reads">0 outside reads scored</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="ph"><h2><b>Macro</b> · the whole room</h2><span class="status off" id="roomstatus">Standby</span><span class="sp chip" id="scn-title">Pick a simulation</span></div>
+      <div class="roomwrap">
+        <div class="banner" id="banner"><span class="n" id="b-n"></span><b id="b-t"></b><q id="b-q"></q></div>
+        <svg id="room" viewBox="0 0 1000 560" role="img" aria-label="Agent room"><g id="edges"></g><g id="packets"></g><g id="nodes"></g></svg>
+      </div>
+      <div class="legend"><span><i style="background:var(--clean)"></i>clean</span><span><i style="background:var(--watch)"></i>watch · a person decides</span><span><i style="background:var(--taint)"></i>tainted · blocked</span><span><i style="background:var(--quar)"></i>quarantined</span><span>Ring = drift score · dashed line = level carried along a message</span></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2><b>Micro</b> · agent lens</h2><span class="sp chip" id="follow">following the action</span></div>
+      <div class="lens" id="lens"><div class="empty">Run a simulation. Click any agent in the room to pin it here.</div></div>
+    </div>
+  </section>
+
+  <section class="bottom">
+    <div class="panel"><div class="ph"><h2><b>Live</b> timeline</h2><span class="sp chip mono" id="evcount">0 events</span></div><div class="feed" id="feed"><div class="empty" style="padding:10px">Waiting for a run.</div></div></div>
+    <div class="panel"><div class="ph"><h2><b>Verdicts</b> per request</h2></div><div class="verdicts" id="verdicts"><div class="empty">Each request's outcome lands here.</div></div></div>
+    <div class="panel"><div class="ph"><h2><b>Ledger</b> · executed side effects</h2></div><div class="ledger" id="ledger"><div class="empty" style="padding:6px 0">Nothing executed yet.</div></div></div>
+  </section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="card">
+    <div class="top">
+      <svg class="ring" viewBox="0 0 46 46"><circle cx="23" cy="23" r="19" fill="none" stroke="var(--line)" stroke-width="4"/><circle id="m-ring" cx="23" cy="23" r="19" fill="none" stroke="var(--human)" stroke-width="4" stroke-linecap="round" stroke-dasharray="119.4" transform="rotate(-90 23 23)"/><text id="m-secs" x="23" y="24" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="800" fill="currentColor"></text></svg>
+      <div><h3 id="m-title">Human decision required</h3><p id="m-sub"></p></div>
+    </div>
+    <div class="body">
+      <div class="ask" id="m-ask"></div>
+      <div class="why" id="m-why"></div>
+    </div>
+    <div class="acts"><button class="no" id="m-deny">Deny</button><button class="ok" id="m-ok">Approve</button></div>
+    <div class="queue" id="m-queue">Unanswered decisions are denied when the timer runs out.</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const f3 = x => x == null ? "—" : Number(x) < 0.001 ? "<0.001" : Number(x).toFixed(3);
+const inr = n => { n = Math.round(n || 0); const s = String(n), t = s.slice(-3), h = s.slice(0, -3);
+  return "₹" + (h ? h.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + t : t); };
+const NS = "http://www.w3.org/2000/svg";
+const POS = {intake:[110,290], research:[430,150], finance:[770,150], it:[430,300], comms:[430,450], support:[770,400],
+  "research-2":[600,70], "finance-2":[900,70], "it-2":[620,250], "comms-2":[620,505], "support-2":[910,480]};
+const META = {intake:["IN","Intake"], research:["VR","Vendor Research"], finance:["FI","Finance"], it:["IT","IT Access"],
+  comms:["PO","People Ops"], support:["CC","Customer Care"]};
+const TOOL = {release_payment:"release payment", grant_access:"grant access", send_email:"send email", issue_refund:"issue refund"};
+const S = {scenario:"payout", mode:"on", appr:"critical", th:null, wt:null, run:null, runMode:"on", nodes:{}, agents:{},
+  sel:null, pinned:false, queue:[], cur:null, nev:0, replay:true, tally:{}, wfTotal:0};
+
+/* controls */
+function seg(id, key){ document.querySelectorAll(`#${id} button`).forEach(b => b.onclick = () => {
+  S[key] = b.dataset.v; document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle("on", x === b)); }); }
+seg("mode","mode"); seg("appr","appr");
+$("#theme").onclick = () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
+  try { localStorage.setItem("anchor-theme", r.dataset.theme); } catch(e){} };
+try { const t = localStorage.getItem("anchor-theme"); if (t) document.documentElement.dataset.theme = t; } catch(e){}
 $("#run").onclick = async () => {
   const r = await fetch("/v1/room/run", {method:"POST", headers:{"content-type":"application/json"},
-    body: JSON.stringify({mode, brain: $("#brain").value, pace: 0.9})}).then(r => r.json());
-  if (!r.started) feed("note", esc(r.reason) + " (approve or deny the waiting card first)", "warn");
+    body: JSON.stringify({scenario:S.scenario, mode:S.mode, approvals:S.appr, brain:$("#brain").value, pace:0.7,
+      stream_len:8})}).then(r => r.json()).catch(() => ({started:false, reason:"service unreachable"}));
+  if (!r.started) toast(r.reason || "could not start", "bad");
 };
+$("#stop").onclick = () => fetch("/v1/room/stop", {method:"POST"});
 
-function bump(k){ live_t[k] = (live_t[k] || 0) + 1; tally(live_t); }
-function reset(){ live_t = {}; agents = {}; edges = []; room.querySelectorAll(".agent").forEach(n => n.remove()); svg.innerHTML = "";
-  $("#feed").innerHTML = ""; $("#approvals").innerHTML = '<div class="empty">Nothing waiting.</div>';
-  $("#ledger tbody").innerHTML = '<tr><td class="empty">No side effects yet.</td></tr>'; tally({}); }
+const ICON = {payout:"₹", privilege:"⚿", exfil:"@", refund:"↺", clean:"✓", live:"∿"};
+fetch("/v1/room/scenarios").then(r => r.json()).then(j => {
+  $("#rail").innerHTML = j.scenarios.map(s => `<button class="scn ${s.id === S.scenario ? "sel" : ""}" data-id="${s.id}">
+    <span class="tag ${s.threat}">${s.threat === "attack" ? "attack" : s.threat === "clean" ? "no attack" : "live mix"}</span>
+    <div class="t"><span class="gl ${s.threat}">${ICON[s.id] || "•"}</span>${esc(s.title)}</div><div class="d">${esc(s.tagline)}</div></button>`).join("");
+  document.querySelectorAll(".scn").forEach(b => b.onclick = () => { S.scenario = b.dataset.id;
+    document.querySelectorAll(".scn").forEach(x => x.classList.toggle("sel", x === b)); });
+});
+fetch("/v1/health").then(r => r.json()).then(h => { S.th = h.threshold; S.wt = h.watch_threshold;
+  const m = (h.model || "").split("/").pop();
+  $("#model").textContent = `${m} · L${h.layer} · block ${f3(h.threshold)}${h.watch_threshold != null ? " · watch " + f3(h.watch_threshold) : ""}`;
+}).catch(() => $("#model").textContent = "service offline");
 
-function slotOf(id){ const k = id.split(":").pop(); return SLOTS[k] || [50,50]; }
-function spawn(e){
-  const n = document.createElement("div"); n.className = "agent " + (runMode === "off" ? "off" : "clean");
-  const [x,y] = slotOf(e.agent); n.style.left = x + "%"; n.style.top = y + "%";
-  n.innerHTML = `<div class="n">${esc(e.name)}<span class="badge">${runMode === "off" ? "no Anchor" : "clean"}</span></div>
-    <div class="r">${esc(e.task)}</div><div class="bar"><i style="width:0"></i>${threshold != null ? `<b style="left:${threshold*100}%"></b>` : ""}${watchT != null ? `<b style="left:${watchT*100}%;opacity:.3"></b>` : ""}</div>
-    <div class="score">drift — · threshold ${fmt(threshold)}</div>`;
-  room.appendChild(n); agents[e.agent] = {node:n, name:e.name};
+/* room graph */
+function ensureNode(node, key){
+  if (S.nodes[node]) return S.nodes[node];
+  const [x, y] = POS[node] || [500, 280], meta = META[key] || ["??", key];
+  const g = document.createElementNS(NS, "g"); g.setAttribute("class", "node"); g.setAttribute("transform", `translate(${x},${y})`);
+  const C = 2 * Math.PI * 40;
+  g.innerHTML = `<circle class="halo" r="46"/><circle class="track" r="40"/><circle class="ring" r="40" stroke-dasharray="${C}" stroke-dashoffset="${C}" transform="rotate(-90)"/>
+    <circle class="disc" r="33"/><text class="ini">${meta[0]}</text>
+    <text class="nm" y="62">${esc(meta[1])}${node.endsWith("-2") ? " 2" : ""}</text><text class="st" y="78">ready</text><text class="sc" y="93"></text>`;
+  g.onclick = () => { S.pinned = true; select(node); $("#follow").textContent = "pinned · click Follow"; $("#follow").onclick = () => { S.pinned = false; $("#follow").textContent = "following the action"; }; };
+  $("#nodes").appendChild(g);
+  const n = S.nodes[node] = {g, x, y, key, C, level:"clean", score:null, status:"ready", agent:null};
+  return n;
 }
-function setLevel(id, level, score){
-  const a = agents[id]; if (!a || level === "off" || level == null) return;
-  a.node.classList.remove("clean","watch","tainted"); a.node.classList.add(level);
-  const b = a.node.querySelector(".badge"); b.className = "badge " + level; b.textContent = level;
-  if (score != null){ const i = a.node.querySelector(".bar i"); i.style.width = Math.min(100, score*100) + "%";
-    i.style.background = score >= threshold ? "var(--taint)" : (watchT != null && score >= watchT) ? "var(--watch)" : "var(--clean)";
-    a.node.querySelector(".score").textContent = `drift ${fmt(score)} · threshold ${fmt(threshold)}`; }
+function setNode(node, patch){
+  const n = S.nodes[node]; if (!n) return; Object.assign(n, patch);
+  n.g.classList.remove("watch","tainted","clean"); if (S.runMode === "on") n.g.classList.add(n.level);
+  n.g.classList.toggle("quar", n.status === "quarantined");
+  if (n.score != null){ n.g.querySelector(".ring").setAttribute("stroke-dashoffset", n.C * (1 - Math.min(1, n.score)));
+    n.g.querySelector(".sc").textContent = "drift " + f3(n.score); }
+  n.g.querySelector(".st").textContent = n.status;
 }
-function edge(src, dst, lvl){
-  const bad = lvl === "tainted" || lvl === "watch", col = lvl === "tainted" ? "var(--taint)" : lvl === "watch" ? "var(--watch)" : "var(--edge)";
-  const p = id => { const [x,y] = slotOf(id); return [x/100*room.clientWidth, y/100*room.clientHeight]; };
-  const [x1,y1] = p(src), [x2,y2] = p(dst);
-  const l = document.createElementNS("http://www.w3.org/2000/svg","line");
-  Object.entries({x1,y1,x2,y2,stroke: col, "stroke-width": bad ? 3 : 2,
-    "stroke-dasharray": bad ? "6 4" : ""}).forEach(([k,v]) => l.setAttribute(k, v));
-  svg.appendChild(l);
+function edgeId(a, b){ return `e-${a}-${b}`; }
+function edge(a, b, level){
+  const A = S.nodes[a], B = S.nodes[b]; if (!A || !B) return null;
+  let p = document.getElementById(edgeId(a, b));
+  if (!p){ p = document.createElementNS(NS, "path"); p.id = edgeId(a, b); p.setAttribute("class", "edge");
+    const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2 - 30;
+    p.setAttribute("d", `M${A.x},${A.y} Q${mx},${my} ${B.x},${B.y}`); $("#edges").appendChild(p); }
+  p.setAttribute("class", "edge" + (level === "tainted" ? " taint" : level === "watch" ? " hot" : ""));
+  return p;
 }
-function feed(kind, html, cls=""){
-  const d = document.createElement("div"); d.className = "ev " + cls;
-  d.innerHTML = `<span class="k">${esc(kind)}</span> ${html}`; $("#feed").prepend(d);
+function packet(path, level){
+  if (!path || S.replay) return;
+  const c = document.createElementNS(NS, "circle"); c.setAttribute("r", 6); c.setAttribute("class", "packet");
+  const col = level === "tainted" ? "var(--taint)" : level === "watch" ? "var(--watch)" : "var(--brand)";
+  c.setAttribute("fill", col); c.style.color = col; $("#packets").appendChild(c);
+  const L = path.getTotalLength(), t0 = performance.now(), D = 700;
+  (function step(t){ const k = Math.min(1, (t - t0) / D), pt = path.getPointAtLength(L * k);
+    c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y); if (k < 1) requestAnimationFrame(step); else c.remove(); })(t0);
 }
-function tally(t){
-  const s = (v,l,bad) => `<div class="stat ${bad && v ? "bad" : ""}"><div class="v">${v ?? 0}</div><div class="l">${l}</div></div>`;
-  $("#tally").innerHTML = s(t.attacker_payments,"payments to attacker",1) + s(t.blocked,"side effects blocked") +
-    s(t.approvals,"sent to a human") + s(t.false_blocks,"legit actions blocked",1);
+function roomStatus(){
+  const lv = Object.values(S.nodes).map(n => n.level);
+  const el = $("#roomstatus");
+  if (S.runMode !== "on"){ el.className = "status off"; el.textContent = "Anchor off · unwatched"; return; }
+  if (lv.includes("tainted")){ el.className = "status breach"; el.textContent = "Breach contained"; }
+  else if (lv.includes("watch")){ el.className = "status watch"; el.textContent = "Watching"; }
+  else { el.className = "status calm"; el.textContent = "All clear"; }
+}
+
+/* micro lens */
+function select(node){
+  S.sel = node; Object.entries(S.nodes).forEach(([k, n]) => n.g.classList.toggle("sel", k === node)); renderLens();
+}
+function renderLens(){
+  const n = S.nodes[S.sel], a = n && S.agents[n.agent]; if (!n || !a){ return; }
+  const meta = META[n.key] || ["??", n.key], lvl = S.runMode === "on" ? n.level : "off";
+  const pin = v => v == null ? "" : `left:${Math.min(100, v * 100)}%`;
+  const doc = a.doc ? (a.sentences ? a.sentences.map(s => s.rel >= .25 ? `<mark style="--h:${s.rel}">${esc(s.text)}</mark>` : esc(s.text)).join(" ") : esc(a.doc)) : "";
+  $("#lens").innerHTML = `
+    <div class="who"><div class="av">${meta[0]}</div><div><div class="n">${esc(a.name)}</div><div class="r">${esc(a.role || "")}</div></div>
+      <span class="lvl ${lvl}">${lvl === "off" ? "unwatched" : lvl}</span></div>
+    <div class="box"><div class="k">Anchored task · the user's request</div><div class="task">${esc(a.task)}</div></div>
+    <div class="box"><div class="k">Drift on the last outside read ${a.latency ? `<span class="mono">· ${Math.round(a.latency)} ms</span>` : ""}</div>
+      <div class="big-score mono" style="color:${a.score == null ? "var(--faint)" : a.score >= S.th ? "var(--taint)" : S.wt != null && a.score >= S.wt ? "var(--watch)" : "var(--clean)"}">${a.score == null ? (S.runMode === "on" ? "not scored yet" : "Anchor off") : f3(a.score)}</div>
+      <div class="meter">${S.wt != null ? `<span class="mk" style="${pin(S.wt)}"></span>` : ""}${S.th != null ? `<span class="mk" style="${pin(S.th)}"></span>` : ""}${a.score != null ? `<span class="pin" style="${pin(a.score)}"></span>` : ""}</div>
+      <div class="mlab"><span>0 · on task</span><span>watch ${f3(S.wt)}</span><span>block ${f3(S.th)}</span><span>1</span></div></div>
+    ${a.doc ? `<div class="box"><div class="k">What it read <span class="src">${esc(a.source)}</span>${a.sentences ? " · highlighted = sentences that pull it off task" : ""}</div><div class="doc">${doc}</div></div>` : ""}
+    ${a.inbox ? `<div class="box"><div class="k">Report it received</div><div class="doc">${esc(a.inbox)}</div></div>` : ""}
+    ${a.raw ? `<div class="box"><div class="k">Its decision · ${esc(a.brain)}${a.steered ? " · steered" : ""}</div><div class="code">${esc(a.raw)}</div></div>` : ""}
+    ${a.gate ? `<div class="box"><div class="k">Gate</div><div>${a.gate}</div></div>` : ""}`;
+}
+
+/* feed, verdicts, ledger, stats */
+function feed(ic, cls, html, sub){
+  const f = $("#feed"); if (f.querySelector(".empty")) f.innerHTML = "";
+  const d = document.createElement("div"); d.className = "ev " + (cls || "");
+  d.innerHTML = `<span class="ic">${ic}</span><span class="tx">${html}${sub ? `<small>${esc(sub)}</small>` : ""}</span><span class="tm mono">${new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"})}</span>`;
+  f.prepend(d); S.nev++; $("#evcount").textContent = S.nev + " events";
+}
+function nm(id){ return esc(S.agents[id]?.name || "agent"); }
+function what(tool, a){
+  a = a || {};
+  if (tool === "release_payment") return `${esc(a.amount)} → account ${esc(a.account)}`;
+  if (tool === "issue_refund") return `${esc(a.amount)} refund → ${esc(a.to)}`;
+  if (tool === "grant_access") return `${esc(a.level)} access to ${esc(a.resource)} → ${esc(a.user)}`;
+  if (tool === "send_email") return `email → ${esc(a.to)}${a.attachment ? ` · 📎 ${esc(a.attachment)}` : ""}`;
+  return esc(JSON.stringify(a));
+}
+function countTo(el, v, fmt){
+  const from = Number(el.dataset.v || 0); el.dataset.v = v;
+  if (S.replay || from === v){ el.textContent = fmt(v); return; }
+  const t0 = performance.now(), D = 900;
+  (function step(t){ const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt(from + (v - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
+}
+function stats(t){
+  if (!t) return; S.tally = t; const n = x => String(Math.round(x));
+  countTo($("#h-rupees"), t.rupees_protected || 0, inr);
+  countTo($("#h-stopped"), t.hijacks_stopped || 0, n);
+  countTo($("#h-landed"), t.hijacks_landed || 0, n);
+  countTo($("#h-human"), t.approvals || 0, n);
+  countTo($("#h-false"), t.false_blocks || 0, n);
+  $("#h-human-s").textContent = `${t.approvals_policy || 0} critical-decision rule · ${t.approvals_anchor || 0} Anchor watch`;
+  $("#h-reads").textContent = `${t.reads_scored || 0} outside reads scored`;
+  $("#h-rupees-s").textContent = t.rupees_lost ? `${inr(t.rupees_lost)} lost to hijacks` : "payouts and refunds a hijacked agent tried to send";
+}
+function verdict(e){
+  const v = $("#verdicts"); if (v.querySelector(".empty")) v.innerHTML = "";
+  const cls = e.verdict === "completed" ? "ok" : e.verdict === "hijack stopped" ? "stop" : e.verdict === "hijack landed" || e.verdict === "false block" ? "bad" : "hold";
+  const by = e.by ? ` · by ${e.by === "anchor" ? "Anchor" : e.by === "policy" ? "a person (critical-decision rule)" : e.by.includes("anchor") && e.by.includes("policy") ? "Anchor + a person" : "a person (Anchor watch)"}` : "";
+  v.insertAdjacentHTML("afterbegin", `<div class="vd"><span class="b ${cls}">${esc(e.verdict)}</span><div class="t">${esc(e.title)}${e.rerouted ? " · rerouted" : ""}</div>
+    <div class="s">${e.poisoned ? "<b style='color:var(--taint)'>request carried an injection</b>" : "clean request"}${esc(by)}</div></div>`);
 }
 function ledger(e){
-  const tb = $("#ledger tbody"); if (tb.querySelector(".empty")) tb.innerHTML = "";
-  const a = e.action || {}, what = e.tool === "release_payment" ? `${esc(a.amount)} → acct ${esc(a.account)}`
-    : e.tool === "grant_access" ? `${esc(a.level)} access: ${esc(a.user)} → ${esc(a.resource)}` : `email → ${esc(a.to)}`;
-  tb.insertAdjacentHTML("afterbegin", `<tr class="${e.attacker ? "attacker" : ""}"><td>${esc(agents[e.agent]?.name)}</td><td>${what}${e.attacker ? " · ATTACKER ACCOUNT" : ""}</td></tr>`);
+  const l = $("#ledger"); if (l.querySelector(".empty")) l.innerHTML = "";
+  l.insertAdjacentHTML("afterbegin", `<div class="lr ${e.hijack ? "hijack" : ""}"><span>${e.hijack ? "⚠" : "✓"}</span><div class="w">${what(e.tool, e.action)}<small>${nm(e.agent)} · ${esc(TOOL[e.tool] || e.tool)}${e.hijack ? " · attacker's action" : ""}</small></div></div>`);
 }
-function approval(e){
-  const box = $("#approvals"); if (box.querySelector(".empty")) box.innerHTML = "";
-  const a = e.action || {};
-  box.insertAdjacentHTML("afterbegin", `<div class="appr" id="ap-${e.id}"><b>${esc(agents[e.agent]?.name)}</b> wants <span class="tag">${esc(e.tool)}</span>
-    <div>${esc(a.amount ?? "")} → acct ${esc(a.account ?? "")}</div><div class="empty">${esc(e.reason)}</div>
-    <div class="acts"><button class="primary" data-d="approve">Approve</button><button data-d="deny">Deny</button></div></div>`);
-  box.querySelectorAll(`#ap-${e.id} button`).forEach(b => b.onclick = async () => {
-    await fetch("/v1/room/approve", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({id:e.id, decision:b.dataset.d})});
-    document.getElementById("ap-" + e.id).remove();
-    if (!box.children.length) box.innerHTML = '<div class="empty">Nothing waiting.</div>';
-  });
-}
+let toastT;
+function toast(msg, cls){ const t = $("#toast"); t.className = "toast show " + (cls || ""); t.textContent = msg; clearTimeout(toastT); toastT = setTimeout(() => t.className = "toast", 3600); }
 
+/* approvals */
+function showNext(){
+  if (S.cur || !S.queue.length){ if (!S.cur) $("#modal").classList.remove("show"); return; }
+  const e = S.cur = S.queue.shift();
+  $("#m-sub").textContent = `${S.agents[e.agent]?.name || "An agent"} wants to ${TOOL[e.tool] || e.tool}`;
+  $("#m-ask").innerHTML = what(e.tool, e.action) + `<small>${esc(S.agents[e.agent]?.task || "")}</small>`;
+  $("#m-why").innerHTML = e.reasons.map(r => `<div class="${r.by}"><b>${r.by === "policy" ? "critical decision" : "Anchor"}</b><span>${esc(r.text)}</span></div>`).join("");
+  $("#m-queue").textContent = S.queue.length ? `${S.queue.length} more waiting · unanswered decisions are denied` : "Unanswered decisions are denied when the timer runs out.";
+  $("#modal").classList.add("show"); $("#m-ok").focus();
+  const end = e.t * 1000 + e.timeout_s * 1000;
+  (function tick(){ if (S.cur !== e) return; const left = Math.max(0, end - Date.now());
+    $("#m-secs").textContent = Math.ceil(left / 1000); $("#m-ring").setAttribute("stroke-dashoffset", 119.4 * (1 - left / (e.timeout_s * 1000)));
+    if (left > 0) setTimeout(tick, 250); })();
+}
+async function decide(d){ const e = S.cur; if (!e) return; S.cur = null;
+  await fetch("/v1/room/approve", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({id:e.id, decision:d})});
+  showNext(); }
+$("#m-ok").onclick = () => decide("approve"); $("#m-deny").onclick = () => decide("deny");
+document.addEventListener("keydown", k => { if (!S.cur) return; if (k.key === "Escape") decide("deny"); });
+
+/* event handlers */
+function follow(node){ if (!S.pinned) select(node); else if (node === S.sel) renderLens(); }
+function reset(){
+  S.nodes = {}; S.agents = {}; S.sel = null; S.queue = []; S.cur = null; $("#modal").classList.remove("show");
+  ["#edges","#packets","#nodes"].forEach(s => $(s).innerHTML = "");
+  $("#feed").innerHTML = ""; S.nev = 0; $("#verdicts").innerHTML = '<div class="empty">Each request\'s outcome lands here.</div>';
+  $("#ledger").innerHTML = '<div class="empty" style="padding:6px 0">Nothing executed yet.</div>';
+  ["#h-rupees","#h-stopped","#h-landed","#h-human","#h-false"].forEach(s => $(s).dataset.v = 0);
+  stats({}); $("#lens").innerHTML = '<div class="empty">Agents appear as the run starts.</div>';
+}
 const H = {
-  start: e => { reset(); runMode = e.mode; threshold = e.threshold; watchT = e.watch_threshold; feed("start", `mode <b>${e.mode.toUpperCase()}</b> · agents: ${esc(e.brain)}`); },
-  spawn: e => { spawn(e); feed("spawn", `<b>${esc(e.name)}</b> <q>${esc(e.task)}</q>`); },
-  read: e => { setLevel(e.agent, e.level, e.drift_score);
-    const sc = e.trusted ? '<span class="tag">trusted</span>' : e.drift_score == null ? '<span class="tag">not scored</span>' : `drift <b>${fmt(e.drift_score)}</b>${e.latency_ms ? ` · ${Math.round(e.latency_ms)} ms` : ""}`;
-    feed("read", `${esc(agents[e.agent]?.name)} read <span class="tag">${esc(e.source)}</span> ${sc}<q>${esc(e.preview)}</q>`,
-      e.level === "tainted" ? "bad" : e.level === "watch" ? "warn" : ""); },
-  message: e => { edge(e.source, e.target, e.source_level); setLevel(e.target, e.level, e.drift_score);
-    feed("message", `${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}${e.source_level === "tainted" || e.source_level === "watch" ? ` · <b>${e.source_level} propagates</b>` : ""}<q>${esc(e.preview)}</q>`, e.level === "tainted" ? "bad" : e.level === "watch" ? "warn" : ""); },
-  think: e => feed("decide", `${esc(agents[e.agent]?.name)} <span class="tag">${esc(e.brain)}${e.steered ? " · steered" : ""}</span><q>${esc(e.raw)}</q>`),
-  effect: e => { if (e.attacker) bump("attacker_payments"); ledger(e); feed("effect", `${esc(agents[e.agent]?.name)} ran <span class="tag">${esc(e.tool)}</span>${e.attacker ? " · <b>paid the attacker</b>" : ""}`, e.attacker ? "bad" : "good"); },
-  blocked: e => (bump("blocked"), feed("blocked", `Anchor blocked <span class="tag">${esc(e.tool)}</span> from ${esc(agents[e.agent]?.name)}<q>${esc(e.reason)}</q>`, "good")),
-  approval: e => { bump("approvals"); approval(e); feed("approval", `${esc(agents[e.agent]?.name)} → human: <span class="tag">${esc(e.tool)}</span>`, "warn"); },
-  approved: e => feed("approved", `human approved <span class="tag">${esc(e.tool)}</span>`, "good"),
-  denied: e => feed("denied", `human denied <span class="tag">${esc(e.tool)}</span>`, "warn"),
-  quarantine: e => { e.agents.forEach(id => agents[id]?.node.classList.add("quarantined"));
-    feed("quarantine", e.agents.map(id => esc(agents[id]?.name)).join(", ") + " isolated", "warn"); },
-  sanitize: e => feed("sanitize", `removed ${e.removed.length} sentence(s) from the source · re-score <b>${fmt(e.rescore)}</b> (threshold ${fmt(e.threshold)})<q>${e.removed.map(esc).join(" ⟂ ")}</q>`, "good"),
-  reroute: e => feed("reroute", `task rerouted ${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}`, "good"),
-  escalate: e => feed("escalate", esc(e.reason), "warn"),
-  invalid: e => feed("invalid", `${esc(agents[e.agent]?.name)} produced an unusable <span class="tag">${esc(e.tool)}</span> (missing ${esc(e.missing.join(", "))}); not executed`, "warn"),
-  end: e => { tally(e.tally); feed("end", `run finished`); },
-  error: e => feed("error", esc(e.error), "bad"),
+  start: e => { reset(); S.run = e.run; S.runMode = e.mode; S.th = e.threshold; S.wt = e.watch_threshold; S.wfTotal = e.workflows.length;
+    $("#scn-title").textContent = e.title; roomStatus();
+    feed("▶", "", `<b>${esc(e.title)}</b> · Anchor ${e.mode.toUpperCase()} · ${e.approvals === "critical" ? "critical decisions need a person" : "autopilot"} · agents: ${esc(e.brain)}`, e.tagline);
+    Object.keys(META).forEach(k => { const n = ensureNode(k, k); n.g.classList.add("idle"); }); },
+  workflow: e => { const b = $("#banner"); $("#b-n").textContent = `${e.index}/${S.wfTotal}`; $("#b-t").textContent = e.title;
+    $("#b-q").textContent = `from ${e.request.from}: “${e.request.body}”`; b.classList.add("show");
+    feed("✉", "", `Request ${e.index}: <b>${esc(e.title)}</b>`, `${e.request.from}: ${e.request.body}`); },
+  spawn: e => { const n = ensureNode(e.node, e.key); n.g.classList.remove("idle");
+    S.agents[e.agent] = {name:e.name, role:e.role, task:e.task, score:null};
+    setNode(e.node, {agent:e.agent, level:"clean", score:null, status:"working"}); if (e.key !== "intake") follow(e.node); },
+  read: e => { const a = S.agents[e.agent]; if (!a) return;
+    if (e.source !== "inbox"){ Object.assign(a, {doc:e.doc, source:e.source, sentences:e.sentences, score:e.drift_score, latency:e.latency_ms}); }
+    setNode(e.node, {level:e.level === "off" ? "clean" : e.level, score:e.drift_score ?? S.nodes[e.node].score, status: e.trusted ? "reading inbox" : "read " + e.source.split(":")[0]});
+    roomStatus(); if (!e.trusted){ follow(e.node);
+      const cls = e.level === "tainted" ? "bad" : e.level === "watch" ? "warn" : "";
+      feed("👁", cls, `${nm(e.agent)} read <span class="src">${esc(e.source)}</span> · ${e.drift_score == null ? "not scored (Anchor off)" : `drift <b class="mono">${f3(e.drift_score)}</b> → <b>${e.level}</b>`}`, e.doc); } },
+  message: e => { const p = edge(e.source_node, e.target_node, e.source_level); packet(p, e.source_level);
+    const a = S.agents[e.target]; if (a && !e.delegation) a.inbox = e.preview;
+    setNode(e.target_node, {level:e.level === "off" ? "clean" : e.level}); roomStatus();
+    if (!e.delegation) feed("⇢", e.level === "watch" ? "warn" : e.level === "tainted" ? "bad" : "", `${nm(e.source)} → ${nm(e.target)}${(e.source_level === "watch" || e.source_level === "tainted") ? ` · <b>${e.source_level} carried along</b>` : ""}${e.drift_score != null ? ` · message drift <span class="mono">${f3(e.drift_score)}</span>` : ""}`, e.preview); },
+  think: e => { const a = S.agents[e.agent]; if (a){ a.raw = e.raw; a.brain = e.brain; a.steered = e.steered; }
+    setNode(e.node, {status:"decided"}); follow(e.node); feed("◆", "", `${nm(e.agent)} decided <span class="mono" style="color:var(--faint)">${esc(e.brain)}${e.steered ? " · steered" : ""}</span>`, e.raw); },
+  blocked: e => { const a = S.agents[e.agent]; if (a) a.gate = `<b style="color:var(--taint)">Blocked by Anchor</b> · ${esc(e.reason)}`;
+    setNode(e.node, {status:"blocked"}); follow(e.node);
+    feed("⛔", "good", `<b>Anchor blocked</b> ${nm(e.agent)}: ${what(e.tool, e.action)}`, e.reason); if (!S.replay) toast("⛔ Anchor blocked " + (TOOL[e.tool] || e.tool), "good"); },
+  approval: e => { stats(e.tally); setNode(e.node, {status:"waiting for a person"});
+    const a = S.agents[e.agent]; if (a) a.gate = `<b style="color:var(--human)">Waiting for a person</b> · ${e.reasons.map(r => esc(r.text)).join(" · ")}`;
+    follow(e.node); feed("✋", "hum", `<b>Human decision</b>: ${nm(e.agent)} → ${what(e.tool, e.action)}`, e.reasons.map(r => (r.by === "policy" ? "critical: " : "Anchor: ") + r.text).join(" · "));
+    if (!S.replay){ S.queue.push(e); showNext(); } },
+  approved: e => { setNode(e.node, {status:"approved"}); feed("✓", "good", `A person <b>approved</b> ${nm(e.agent)}'s ${esc(TOOL[e.tool] || e.tool)}`); const a = S.agents[e.agent]; if (a) a.gate = "<b style='color:var(--clean)'>Approved by a person</b>"; renderLens(); },
+  denied: e => { setNode(e.node, {status: e.timeout ? "denied · no answer" : "denied by a person"}); feed("✕", "hum", `${e.timeout ? "No answer in time, so" : "A person"} <b>denied</b> ${nm(e.agent)}'s ${esc(TOOL[e.tool] || e.tool)}`);
+    const a = S.agents[e.agent]; if (a) a.gate = `<b style='color:var(--human)'>Denied${e.timeout ? " (timed out)" : " by a person"}</b>`;
+    if (S.cur && S.cur.id === e.id){ S.cur = null; showNext(); } S.queue = S.queue.filter(q => q.id !== e.id); renderLens(); },
+  effect: e => { stats(e.tally); ledger(e); setNode(e.node, {status: e.hijack ? "attacker's action ran" : "done"});
+    feed(e.hijack ? "⚠" : "✓", e.hijack ? "bad" : "good", `${nm(e.agent)} executed ${what(e.tool, e.action)}${e.hijack ? " · <b>the attacker's action</b>" : ""}`);
+    if (e.hijack && !S.replay) toast("⚠ Hijack landed: " + (TOOL[e.tool] || e.tool), "bad"); },
+  verdict: e => { stats(e.tally); verdict(e); },
+  quarantine: e => { e.nodes.forEach(n => setNode(n, {status:"quarantined"})); feed("🔒", "warn", `Quarantined ${e.agents.map(nm).join(" and ")}`, "the flagged chain is isolated from the room"); },
+  sanitize: e => { feed("✂", "good", `Sanitized the source · removed ${e.removed.length} sentence(s) · re-score <b class="mono">${f3(e.rescore)}</b>`, e.removed.join(" ⟂ ")); },
+  reroute: e => feed("↻", "good", `Work rerouted to fresh agents`, "a payout rebuilt from a sanitized source still goes to a person"),
+  escalate: e => feed("⇪", "hum", `Escalated to a person`, e.reason),
+  invalid: e => feed("?", "warn", `${nm(e.agent)} produced an unusable ${esc(TOOL[e.tool] || e.tool)}, so it was not executed`, "missing " + e.missing.join(", ")),
+  stopped: e => feed("■", "", "Stream stopped"),
+  end: e => { stats(e.tally); $("#banner").classList.remove("show"); feed("■", "", `<b>Run finished</b> · ${e.tally.workflows} requests`);
+    if (!S.replay) toast(e.tally.hijacks_landed ? `Run finished · ${e.tally.hijacks_landed} hijack(s) landed` : `Run finished · ${e.tally.hijacks_stopped} hijack(s) stopped${e.tally.rupees_protected ? " · " + inr(e.tally.rupees_protected) + " kept" : ""}`, e.tally.hijacks_landed ? "bad" : "good"); },
+  error: e => feed("!", "bad", "Run error", e.error),
 };
+
+/* live connection: replay the backlog quietly, then go live */
 const es = new EventSource("/v1/events");
-let live = false;
+const t0 = Date.now() / 1000;
+let running = false;
 es.onmessage = m => { const e = JSON.parse(m.data); if (e.kind !== "room") return;
-  if (e.type === "start") live = true; if (!live) return; (H[e.type] || (() => {}))(e); };
-fetch("/v1/health").then(r => r.json()).then(h => { threshold = h.threshold; watchT = h.watch_threshold;
-  $("#health").textContent = `${h.model} · layer ${h.layer} · block ${fmt(h.threshold)}${h.watch_threshold != null ? ` · watch ${fmt(h.watch_threshold)}` : ""} · ${h.device}${h.steering ? " · steering ready" : ""}`; });
-tally({});
+  S.replay = e.t < t0 - 1;
+  if (e.type === "start"){ running = true; } if (e.type === "end" || e.type === "error"){ running = false; }
+  if (!S.run && e.type !== "start") return;
+  (H[e.type] || (() => {}))(e);
+  const live = running && !S.replay; $("#live").classList.toggle("on", running);
+  $("#live span").textContent = running ? (S.replay ? "replaying" : "live") : "idle";
+  $("#run").disabled = running && !S.replay; $("#stop").disabled = !(running && !S.replay);
+};
+es.onerror = () => { $("#live span").textContent = "reconnecting"; };
 </script>
 </body>
 </html>
