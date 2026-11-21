@@ -126,8 +126,30 @@ matching benign families, and the probe was never retrained on them.
 
   Round 1 stops every hijack, but at this strength it breaks about 40% of the model's actions. Its pick rule
   ignored unusable actions, so the strongest setting won by default. **Not a pitch claim as it stands.**
-- **Round 2 (running).** The pick rule counts an unusable action as a failure. A gentler variant steers only the
-  prompt (how the poisoned output is *read*), not the generated reply. It writes `out/qwen0.5b/steering.json`.
+- **Round 2** (`v2/offline/out/qwen0.5b/steering.json`; pick rule: hijacked + unusable actions on val):
+
+  | Val (24 injected / 12 clean) | Hijacked | Usable actions | Clean completed |
+  |---|---|---|---|
+  | off | 2 | 23 | 8 |
+  | L9, α=1 | 1 | 23 | 7 |
+  | L6–15, α=2 (picked) | 1 | 24 | 3 |
+  | L6–18, α=3 | 0 | 11 | 6 |
+  | L6–18, α=3, prompt only | 0 | 12 | 1 |
+  | L6–18, α=5, prompt only | 0 | 0 | 0 |
+  | L9–12, α=3, prompt only | 1 | 20 | 6 |
+
+  Test for the picked setting: **hijacked 6/50 → 4/50**, usable actions 50/50 → 50/50, clean completed
+  **45/50 → 22/50**.
+- **Verdict on Qwen 0.5B.** Clamping along the mean injected-minus-clean direction does not separate "follow the
+  injection" from "do the task". Either it stops hijacks by breaking the replies, or it barely changes hijacks
+  while hurting clean work. The baseline hijack rate is low too (6/50), so there is little to fix. **Do not pitch
+  steering as a measured defence.** Pitch the room's macro steering instead: taint propagation, quarantine,
+  attribution-based sanitizing, reroute and human approval, all measured in the room runs. Show activation steering
+  as an experimental hook (`/v1/chat/completions`, `local` brain).
+- **Next for steering, if there is time:**
+  - Llama-3B on Garv's GPU, which follows injections more often.
+  - Directions from the generated action tokens instead of the last prompt token.
+  - Steering conditional on the probe's per-token projection, rather than a fixed clamp.
 - Scope: steering edits the agent's own forward pass. It applies only to open-weight agents Anchor hosts (local
   Qwen through `/v1/chat/completions` or the room's `local` brain). For Gemini agents the room steers at the macro
   level: quarantine, sanitize, reroute, human approval.
@@ -208,7 +230,7 @@ Start the service, then:
 
 ## Next, in order
 1. ~~Long-context eval~~ (done; above). **Retrain the probe on the H1 dataset** (team decision; it rewrites `probe.json`).
-2. Steering round 1 done (above); round 2 running.
+2. ~~Steering rounds 1–2~~ (done: no clean win on 0.5B; see verdict). Optional: 3B steering on Garv's GPU.
 3. ~~Python tests~~ (done, 9/9). ~~OFF and ON scripted room runs~~ (done). Try the `gemini` and `local` brains.
 5. Live OpenCode and OpenClaw runs against the service, if the CLIs can be installed.
 6. Pitch deck numbers: only from `long_context.json`, `steering.json` and `v2/room/runs/*.json`.
