@@ -45,14 +45,18 @@ class SidecarScorer(Scorer):
         return [self.tok.decode(ids[s:s + MAX_OUTPUT_TOKENS]) for s in starts]
 
     def _batch_states(self, task, windows, prior):
-        """Probe-layer state at the assistant-start token for each window, one padded batch at a time."""
+        """Probe-layer state at the probe's read position for each window, one padded batch at a time:
+        start = assistant-start token (last prompt token); end = last token of the window's tool output."""
         import torch
 
         out = []
         pad = self.tok.pad_token_id if self.tok.pad_token_id is not None else self.tok.eos_token_id
         for i in range(0, len(windows), BATCH):
-            seqs = [extract.encode(self.tok, extract.messages(task, w, extract.FETCH_CALL, tuple(prior)))[1]
-                    for w in windows[i:i + BATCH]]
+            seqs, at = [], []
+            for w in windows[i:i + BATCH]:
+                text, ids, offsets = extract.encode(self.tok, extract.messages(task, w, extract.FETCH_CALL, tuple(prior)))
+                seqs.append(ids)
+                at.append(len(ids) - 1 if self.position == "start" else extract.end_index(text, offsets, w))
             n = max(map(len, seqs))
             ids = torch.full((len(seqs), n), pad, dtype=torch.long)
             mask = torch.zeros((len(seqs), n), dtype=torch.long)
@@ -62,15 +66,13 @@ class SidecarScorer(Scorer):
             with torch.no_grad():
                 hs = self.model(ids.to(self.device), attention_mask=mask.to(self.device),
                                 output_hidden_states=True).hidden_states[self.layer]
-            for j, s in enumerate(seqs):
-                out.append(hs[j, len(s) - 1].float().cpu().numpy())
+            for j in range(len(seqs)):
+                out.append(hs[j, at[j]].float().cpu().numpy())
         return out
 
     def raw_score(self, task, output, prior=()):
         if not output.strip():
             return {"drift_score": 0.0, "skipped": True, "truncated": False, "windows": 0}
-        if self.position != "start":  # the batched path reads the assistant-start token only
-            return super().raw_score(task, output, prior)
         wins = self.windows(output)
         prior = [self.windows(p)[-1] for p in prior][-1:]  # split payloads: the previous page's last window
         base = self._base(task)
