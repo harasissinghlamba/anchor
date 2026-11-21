@@ -150,8 +150,17 @@ Start the service, then:
 - **OpenClaw.** Run `openclaw plugins install --link ./v2/js/packages/openclaw --force`, then
   `openclaw plugins enable anchor-guard`, and set `plugins.entries.anchor-guard.hooks.allowConversationAccess: true`
   so `before_agent_run` can read the user's prompt.
-- **Not yet verified against a live OpenCode or OpenClaw binary on this Mac.** Neither is installed here. The hook
-  shapes come from the team's A1R evidence (OpenCode 2.3.2) and docs.openclaw.ai.
+- **Verified on this Mac (2026-11-21).** The real OpenClaw CLI (`openclaw@2026.11.6`, Node 24.22.3, isolated state
+  in `v2/js/.cache/harness/oc-state`) installs and enables `anchor-guard`. `plugins inspect anchor-guard --runtime`
+  lists the typed hooks `after_tool_call`, `before_agent_run` and `before_tool_call`, with no diagnostics once
+  `allowConversationAccess` is set. Without the flag, OpenClaw warns that `before_agent_run` is blocked, as
+  documented.
+- **OpenCode check.** `@opencode/plugin@2.3.2` types (`dist/effect/tool.d.ts`) match the 2.3.x adapter: the
+  `execute.before` and `execute.after` events carry `tool`, `sessionID` and `id`, and the after event has
+  `status` plus `result`. A rejection in `execute.before` fails that one call.
+- **Not yet done:** a live agent turn that calls tools in either harness. That needs an LLM provider key (for
+  example Gemini) or a tools-capable local model. OpenClaw needs Node ≥ 24.16 (OpenClaw itself
+  installs under the local Node 24 in `.cache/harness`).
 - **Package the npm tarballs:** `cd v2/js && npm run pack` → `v2/js/dist-tgz/*.tgz`. Publishing to npm needs the
   team's npm account and scope.
 

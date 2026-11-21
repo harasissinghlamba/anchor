@@ -70,7 +70,7 @@ tr.attacker td{color:var(--taint);font-weight:600}
 </div>
 <script>
 const $ = s => document.querySelector(s), room = $("#room"), svg = $("#edges");
-let mode = "on", runMode = "on", threshold = null, agents = {}, edges = [];
+let live_t = {}, mode = "on", runMode = "on", threshold = null, agents = {}, edges = [];
 const SLOTS = {intake:[14,50], it:[42,15], research:[42,50], finance:[72,50], comms:[42,85], "research-2":[60,78], "finance-2":[88,78]};
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt = x => x == null ? "—" : Number(x).toFixed(3);
@@ -79,13 +79,13 @@ document.querySelectorAll("#mode button").forEach(b => b.onclick = () => {
   mode = b.dataset.v; document.querySelectorAll("#mode button").forEach(x => x.classList.toggle("on", x === b));
 });
 $("#run").onclick = async () => {
-  reset();
   const r = await fetch("/v1/room/run", {method:"POST", headers:{"content-type":"application/json"},
     body: JSON.stringify({mode, brain: $("#brain").value, pace: 0.9})}).then(r => r.json());
-  if (!r.started) feed("error", r.reason, "bad");
+  if (!r.started) feed("note", esc(r.reason) + " (approve or deny the waiting card first)", "warn");
 };
 
-function reset(){ agents = {}; edges = []; room.querySelectorAll(".agent").forEach(n => n.remove()); svg.innerHTML = "";
+function bump(k){ live_t[k] = (live_t[k] || 0) + 1; tally(live_t); }
+function reset(){ live_t = {}; agents = {}; edges = []; room.querySelectorAll(".agent").forEach(n => n.remove()); svg.innerHTML = "";
   $("#feed").innerHTML = ""; $("#approvals").innerHTML = '<div class="empty">Nothing waiting.</div>';
   $("#ledger tbody").innerHTML = '<tr><td class="empty">No side effects yet.</td></tr>'; tally({}); }
 
@@ -152,9 +152,9 @@ const H = {
   message: e => { edge(e.source, e.target, e.source_level === "tainted"); setLevel(e.target, e.level, e.drift_score);
     feed("message", `${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}${e.source_level === "tainted" ? " · <b>taint propagates</b>" : ""}<q>${esc(e.preview)}</q>`, e.level === "tainted" ? "bad" : ""); },
   think: e => feed("decide", `${esc(agents[e.agent]?.name)} <span class="tag">${esc(e.brain)}${e.steered ? " · steered" : ""}</span><q>${esc(e.raw)}</q>`),
-  effect: e => { ledger(e); feed("effect", `${esc(agents[e.agent]?.name)} ran <span class="tag">${esc(e.tool)}</span>${e.attacker ? " · <b>paid the attacker</b>" : ""}`, e.attacker ? "bad" : "good"); },
-  blocked: e => feed("blocked", `Anchor blocked <span class="tag">${esc(e.tool)}</span> from ${esc(agents[e.agent]?.name)}<q>${esc(e.reason)}</q>`, "good"),
-  approval: e => { approval(e); feed("approval", `${esc(agents[e.agent]?.name)} → human: <span class="tag">${esc(e.tool)}</span>`, "warn"); },
+  effect: e => { if (e.attacker) bump("attacker_payments"); ledger(e); feed("effect", `${esc(agents[e.agent]?.name)} ran <span class="tag">${esc(e.tool)}</span>${e.attacker ? " · <b>paid the attacker</b>" : ""}`, e.attacker ? "bad" : "good"); },
+  blocked: e => (bump("blocked"), feed("blocked", `Anchor blocked <span class="tag">${esc(e.tool)}</span> from ${esc(agents[e.agent]?.name)}<q>${esc(e.reason)}</q>`, "good")),
+  approval: e => { bump("approvals"); approval(e); feed("approval", `${esc(agents[e.agent]?.name)} → human: <span class="tag">${esc(e.tool)}</span>`, "warn"); },
   approved: e => feed("approved", `human approved <span class="tag">${esc(e.tool)}</span>`, "good"),
   denied: e => feed("denied", `human denied <span class="tag">${esc(e.tool)}</span>`, "warn"),
   quarantine: e => { e.agents.forEach(id => agents[id]?.node.classList.add("quarantined"));

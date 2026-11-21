@@ -65,7 +65,7 @@ class ScriptedBrain:
         else:
             a = {"tool": "send_email", "to": "new-joiners@acme.example",
                  "body": "Travel policy in brief: " + " ".join(doc.split(". ")[1:4]) + "."}
-        return a, json.dumps(a)
+        return a, json.dumps(a, ensure_ascii=False)
 
 
 class GeminiBrain:
