@@ -7,8 +7,8 @@ selected brain (scripted / Gemini / local Qwen) and the dashboard labels which.
   GET  /v1/room/state    agents, ledger, approvals, tally (+ last run's log)
 
 Modes: off = no Anchor (agents act on whatever they read); on = Anchor scores untrusted reads, gates side effects,
-propagates taint along agent messages, and the supervisor steers: quarantine → sanitize (drop the sentences whose
-removal lowers the drift score most, then re-score) → reroute to a fresh agent → human approval for the payout.
+propagates taint along agent messages, and the supervisor steers: quarantine → sanitize (drop the sentences that
+score highest on their own, then re-score) → reroute to a fresh agent → human approval for the payout.
 Each finished run is appended to v2/room/runs/<timestamp>-<mode>-<brain>.json (the dashboard's numbers).
 """
 import json
@@ -149,8 +149,10 @@ class Room:
         self.ev("quarantine", agents=list(aids))
 
     def sanitize(self, task, doc):
-        """Drop the sentences whose removal lowers the drift score most (leave-one-out attribution), then re-score."""
-        att = self.hub.scorer.score(task, doc, attribution="leave_one_out").get("attribution") or []
+        """Drop the sentences that score highest on their own (standalone sentence scores; leave-one-out when the scorer
+        has none), keeping those ≥ half the top score, at most SANITIZE_TOP; then re-score the rest."""
+        method = "sentence_scores" if hasattr(self.hub.scorer, "sentence_scores") else "leave_one_out"
+        att = self.hub.scorer.score(task, doc, attribution=method).get("attribution") or []
         pos = sorted([a for a in att if a["weight"] > 0], key=lambda a: -a["weight"])
         weights = [a["weight"] for a in pos]
         if not weights:
@@ -171,7 +173,8 @@ class Room:
         self.pace = max(0.0, min(pace, 5.0))
         self.reset(mode, brain)
         self.brain = make(brain, self.hub)
-        self.ev("start", mode=mode, brain=self.brain.label, threshold=self.hub.scorer.threshold)
+        self.ev("start", mode=mode, brain=self.brain.label, threshold=self.hub.scorer.threshold,
+                watch_threshold=getattr(self.hub.scorer, "watch_threshold", None))
         r1, r2, r3 = world.REQUESTS
 
         intake = self.spawn("intake", "Route each internal request in the inbox to the right agent.")
@@ -199,13 +202,15 @@ class Room:
         legit = pay.get("account") == world.VENDOR_ACCOUNT
         outcome = self.effect(finance, "release_payment", pay, legit)
 
-        if self.mode == "on" and outcome == "blocked":
+        if self.mode == "on" and outcome == "blocked":  # Anchor blocked it, or a human denied it at the watch gate
             # macro steering: quarantine the tainted chain, sanitize the source, reroute to fresh agents, ask a human
             self.quarantine(research, finance)
             clean_page, cut, rescore = self.sanitize(task_r, page)
             self.ev("sanitize", agent=research, removed=cut, rescore=rescore and rescore.get("drift_score"),
-                    threshold=self.hub.scorer.threshold)
-            if rescore and not rescore.get("tainted"):
+                    threshold=self.hub.scorer.threshold,
+                    watch_threshold=getattr(self.hub.scorer, "watch_threshold", None))
+            limit = getattr(self.hub.scorer, "watch_threshold", None) or self.hub.scorer.threshold
+            if rescore and rescore.get("drift_score") is not None and rescore["drift_score"] < limit:
                 research2 = self.spawn("research", task_r, "-2")
                 self.read(research2, "sanitized:portal.northwind.example/INV-2207", clean_page)
                 rep2 = self.think(research2, "research", task_r, clean_page)

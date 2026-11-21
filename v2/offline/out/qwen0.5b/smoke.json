@@ -4,7 +4,7 @@
     "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
     "precision": "fp32",
     "compute_dtype": "fp32",
-    "device": "mps",
+    "device": "cpu",
     "versions": {
       "python": "3.13.5",
       "torch": "2.14.1",
@@ -17,7 +17,7 @@
   },
   "hidden_states": 25,
   "tokens": 116,
-  "load_s": 2.1,
-  "pass_s": 0.007,
+  "load_s": 3.6,
+  "pass_s": 0.269,
   "torch": "2.14.1"
 }

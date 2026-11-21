@@ -4,7 +4,7 @@
     "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
     "precision": "fp32",
     "compute_dtype": "fp32",
-    "device": "mps",
+    "device": "cpu",
     "versions": {
       "python": "3.13.5",
       "torch": "2.14.1",
@@ -18,13 +18,13 @@
   "model": "Qwen/Qwen2.5-0.5B-Instruct",
   "position": "start",
   "layer": 12,
-  "threshold": 0.746075,
+  "threshold": 0.73703,
   "target_fpr": 0.05,
-  "threshold_strict": 0.925212,
+  "threshold_strict": 0.924641,
   "strict_fpr": 0.01,
   "position_comparison": {
-    "start": 0.935,
-    "end": 0.8029
+    "start": 0.9351,
+    "end": 0.803
   },
   "built_at": "2026-11-21",
   "rows": {
@@ -40,7 +40,7 @@
       "n": 179
     },
     "test": {
-      "auroc": 0.9571,
+      "auroc": 0.9573,
       "tpr": {
         "rate": 0.8103,
         "hits": 188,
@@ -234,7 +234,7 @@
       "n": 179
     },
     "test": {
-      "auroc": 0.9571,
+      "auroc": 0.9573,
       "tpr": {
         "rate": 0.6509,
         "hits": 151,
@@ -611,20 +611,20 @@
     }
   },
   "shuffled_label_control": {
-    "test_auroc": 0.493,
+    "test_auroc": 0.4931,
     "sd": 0.0476,
-    "min": 0.4034,
+    "min": 0.4033,
     "max": 0.6137,
     "n_permutations": 30
   },
-  "verdict": "probe beats keyword on test AUROC (0.9571 vs 0.5853); TPR 188/232 vs 57/232",
+  "verdict": "probe beats keyword on test AUROC (0.9573 vs 0.5853); TPR 188/232 vs 57/232",
   "external": {
     "run_meta": {
       "model": "qwen0.5b",
       "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
       "precision": "fp32",
       "compute_dtype": "fp32",
-      "device": "mps",
+      "device": "cpu",
       "versions": {
         "python": "3.13.5",
         "torch": "2.14.1",
@@ -637,7 +637,7 @@
     },
     "source": "InjecAgent (uiuc-kang-lab/InjecAgent, MIT), base setting",
     "anchor": {
-      "auroc": 0.6478,
+      "auroc": 0.6477,
       "tpr": {
         "hits": 0,
         "n": 200,

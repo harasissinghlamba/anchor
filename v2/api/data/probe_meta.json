@@ -4,7 +4,7 @@
     "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
     "precision": "fp32",
     "compute_dtype": "fp32",
-    "device": "mps",
+    "device": "cpu",
     "versions": {
       "python": "3.13.5",
       "torch": "2.14.1",
@@ -18,7 +18,7 @@
   "model": "Qwen/Qwen2.5-0.5B-Instruct",
   "probe_version": "v2",
   "layer": 12,
-  "threshold": 0.746075,
+  "threshold": 0.73703,
   "built_at": "2026-11-21",
   "rows": {
     "train": 1917,

@@ -15,8 +15,8 @@
     },
     "date": "2026-11-21"
   },
-  "threshold": 0.43131598830223083,
-  "layer": 9,
+  "threshold": 0.737030029296875,
+  "layer": 12,
   "rows_per_label": 40,
   "context_tokens": {
     "sidecar": "\u2264 training frame (SYSTEM + task + \u2264400-token output)",
@@ -25,49 +25,49 @@
   },
   "results": {
     "sidecar": {
-      "auroc": 0.8775,
-      "caught": 31,
+      "auroc": 0.9106,
+      "caught": 30,
       "injected": 40,
-      "false_alarms": 12,
+      "false_alarms": 2,
       "clean": 40,
-      "mean_injected": 0.763,
-      "mean_clean": 0.2567
+      "mean_injected": 0.7755,
+      "mean_clean": 0.1769
     },
     "in_agent_harness": {
-      "auroc": 0.6669,
-      "caught": 10,
+      "auroc": 0.8469,
+      "caught": 5,
       "injected": 40,
-      "false_alarms": 6,
+      "false_alarms": 0,
       "clean": 40,
-      "mean_injected": 0.2786,
-      "mean_clean": 0.1477
+      "mean_injected": 0.2055,
+      "mean_clean": 0.0163
     },
     "in_agent_step_harness": {
-      "auroc": 0.6669,
-      "caught": 10,
+      "auroc": 0.8469,
+      "caught": 5,
       "injected": 40,
-      "false_alarms": 6,
+      "false_alarms": 0,
       "clean": 40,
-      "mean_injected": 0.2786,
-      "mean_clean": 0.1477
+      "mean_injected": 0.2055,
+      "mean_clean": 0.0163
     },
     "in_agent_full": {
-      "auroc": 0.6512,
-      "caught": 1,
+      "auroc": 0.8269,
+      "caught": 6,
       "injected": 40,
       "false_alarms": 0,
       "clean": 40,
-      "mean_injected": 0.0173,
-      "mean_clean": 0.0002
+      "mean_injected": 0.2383,
+      "mean_clean": 0.008
     },
     "in_agent_step_full": {
-      "auroc": 0.7606,
-      "caught": 2,
+      "auroc": 0.8556,
+      "caught": 0,
       "injected": 40,
       "false_alarms": 0,
       "clean": 40,
-      "mean_injected": 0.0363,
-      "mean_clean": 0.0008
+      "mean_injected": 0.0,
+      "mean_clean": 0.0
     }
   }
 }

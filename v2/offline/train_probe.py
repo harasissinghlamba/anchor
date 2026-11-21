@@ -91,9 +91,9 @@ def main(argv=None):
     position, best = top["position"], top["layer"]
     X, scaler, clf = models[position, best]
     # Round once: threshold, decisions and every stored score use the same 6-decimal values.
-    scores = np.round(predict(scaler, clf, X), 6)
-    thr = threshold_at_fpr(scores[va], y[va], TARGET_FPR)
-    thr_strict = threshold_at_fpr(scores[va], y[va], STRICT_FPR)
+    scores = np.round(predict(scaler, clf, X).astype(np.float64), 6)  # float64: stored 6-decimal values compare exactly
+    thr = float(threshold_at_fpr(scores[va], y[va], TARGET_FPR))  # float32 → float: round() must give 6 exact decimals
+    thr_strict = float(threshold_at_fpr(scores[va], y[va], STRICT_FPR))
 
     # Keyword baseline on the same rows (every page a row shows the model); fixed rule, no tuning.
     kw = np.array([keyword_hit(" ".join(r.get("prior_outputs", []) + [r["output"]])) for r in rows])
@@ -132,7 +132,7 @@ def main(argv=None):
         f"TPR {a['tpr']['hits']}/{a['tpr']['n']} vs {k['tpr']['hits']}/{k['tpr']['n']}"
     )
 
-    probe = {"run_meta": meta, "model": run.hf_id, "position": position, "layer": best, "threshold": thr,
+    probe = {"run_meta": meta, "model": run.hf_id, "position": position, "layer": best, "threshold": round(thr, 6),
              "threshold_strict": thr_strict, "mean": scaler.mean_.tolist(),
              "scale": scaler.scale_.tolist(), "coef": clf.coef_[0].tolist(), "intercept": float(clf.intercept_[0])}
     run.out.mkdir(parents=True, exist_ok=True)

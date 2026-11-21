@@ -70,7 +70,7 @@ tr.attacker td{color:var(--taint);font-weight:600}
 </div>
 <script>
 const $ = s => document.querySelector(s), room = $("#room"), svg = $("#edges");
-let live_t = {}, mode = "on", runMode = "on", threshold = null, agents = {}, edges = [];
+let watchT = null, live_t = {}, mode = "on", runMode = "on", threshold = null, agents = {}, edges = [];
 const SLOTS = {intake:[14,50], it:[42,15], research:[42,50], finance:[72,50], comms:[42,85], "research-2":[60,78], "finance-2":[88,78]};
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt = x => x == null ? "—" : Number(x).toFixed(3);
@@ -94,7 +94,7 @@ function spawn(e){
   const n = document.createElement("div"); n.className = "agent " + (runMode === "off" ? "off" : "clean");
   const [x,y] = slotOf(e.agent); n.style.left = x + "%"; n.style.top = y + "%";
   n.innerHTML = `<div class="n">${esc(e.name)}<span class="badge">${runMode === "off" ? "no Anchor" : "clean"}</span></div>
-    <div class="r">${esc(e.task)}</div><div class="bar"><i style="width:0"></i>${threshold != null ? `<b style="left:${threshold*100}%"></b>` : ""}</div>
+    <div class="r">${esc(e.task)}</div><div class="bar"><i style="width:0"></i>${threshold != null ? `<b style="left:${threshold*100}%"></b>` : ""}${watchT != null ? `<b style="left:${watchT*100}%;opacity:.3"></b>` : ""}</div>
     <div class="score">drift — · threshold ${fmt(threshold)}</div>`;
   room.appendChild(n); agents[e.agent] = {node:n, name:e.name};
 }
@@ -103,14 +103,15 @@ function setLevel(id, level, score){
   a.node.classList.remove("clean","watch","tainted"); a.node.classList.add(level);
   const b = a.node.querySelector(".badge"); b.className = "badge " + level; b.textContent = level;
   if (score != null){ const i = a.node.querySelector(".bar i"); i.style.width = Math.min(100, score*100) + "%";
-    i.style.background = score >= threshold ? "var(--taint)" : "var(--clean)";
+    i.style.background = score >= threshold ? "var(--taint)" : (watchT != null && score >= watchT) ? "var(--watch)" : "var(--clean)";
     a.node.querySelector(".score").textContent = `drift ${fmt(score)} · threshold ${fmt(threshold)}`; }
 }
-function edge(src, dst, bad){
+function edge(src, dst, lvl){
+  const bad = lvl === "tainted" || lvl === "watch", col = lvl === "tainted" ? "var(--taint)" : lvl === "watch" ? "var(--watch)" : "var(--edge)";
   const p = id => { const [x,y] = slotOf(id); return [x/100*room.clientWidth, y/100*room.clientHeight]; };
   const [x1,y1] = p(src), [x2,y2] = p(dst);
   const l = document.createElementNS("http://www.w3.org/2000/svg","line");
-  Object.entries({x1,y1,x2,y2,stroke: bad ? "var(--taint)" : "var(--edge)", "stroke-width": bad ? 3 : 2,
+  Object.entries({x1,y1,x2,y2,stroke: col, "stroke-width": bad ? 3 : 2,
     "stroke-dasharray": bad ? "6 4" : ""}).forEach(([k,v]) => l.setAttribute(k, v));
   svg.appendChild(l);
 }
@@ -143,14 +144,14 @@ function approval(e){
 }
 
 const H = {
-  start: e => { reset(); runMode = e.mode; threshold = e.threshold; feed("start", `mode <b>${e.mode.toUpperCase()}</b> · agents: ${esc(e.brain)}`); },
+  start: e => { reset(); runMode = e.mode; threshold = e.threshold; watchT = e.watch_threshold; feed("start", `mode <b>${e.mode.toUpperCase()}</b> · agents: ${esc(e.brain)}`); },
   spawn: e => { spawn(e); feed("spawn", `<b>${esc(e.name)}</b> <q>${esc(e.task)}</q>`); },
   read: e => { setLevel(e.agent, e.level, e.drift_score);
     const sc = e.trusted ? '<span class="tag">trusted</span>' : e.drift_score == null ? '<span class="tag">not scored</span>' : `drift <b>${fmt(e.drift_score)}</b>${e.latency_ms ? ` · ${Math.round(e.latency_ms)} ms` : ""}`;
     feed("read", `${esc(agents[e.agent]?.name)} read <span class="tag">${esc(e.source)}</span> ${sc}<q>${esc(e.preview)}</q>`,
       e.level === "tainted" ? "bad" : e.level === "watch" ? "warn" : ""); },
-  message: e => { edge(e.source, e.target, e.source_level === "tainted"); setLevel(e.target, e.level, e.drift_score);
-    feed("message", `${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}${e.source_level === "tainted" ? " · <b>taint propagates</b>" : ""}<q>${esc(e.preview)}</q>`, e.level === "tainted" ? "bad" : ""); },
+  message: e => { edge(e.source, e.target, e.source_level); setLevel(e.target, e.level, e.drift_score);
+    feed("message", `${esc(agents[e.source]?.name)} → ${esc(agents[e.target]?.name)}${e.source_level === "tainted" || e.source_level === "watch" ? ` · <b>${e.source_level} propagates</b>` : ""}<q>${esc(e.preview)}</q>`, e.level === "tainted" ? "bad" : e.level === "watch" ? "warn" : ""); },
   think: e => feed("decide", `${esc(agents[e.agent]?.name)} <span class="tag">${esc(e.brain)}${e.steered ? " · steered" : ""}</span><q>${esc(e.raw)}</q>`),
   effect: e => { if (e.attacker) bump("attacker_payments"); ledger(e); feed("effect", `${esc(agents[e.agent]?.name)} ran <span class="tag">${esc(e.tool)}</span>${e.attacker ? " · <b>paid the attacker</b>" : ""}`, e.attacker ? "bad" : "good"); },
   blocked: e => (bump("blocked"), feed("blocked", `Anchor blocked <span class="tag">${esc(e.tool)}</span> from ${esc(agents[e.agent]?.name)}<q>${esc(e.reason)}</q>`, "good")),
@@ -169,8 +170,8 @@ const es = new EventSource("/v1/events");
 let live = false;
 es.onmessage = m => { const e = JSON.parse(m.data); if (e.kind !== "room") return;
   if (e.type === "start") live = true; if (!live) return; (H[e.type] || (() => {}))(e); };
-fetch("/v1/health").then(r => r.json()).then(h => { threshold = h.threshold;
-  $("#health").textContent = `${h.model} · layer ${h.layer} · threshold ${fmt(h.threshold)} · ${h.device}${h.steering ? " · steering ready" : ""}`; });
+fetch("/v1/health").then(r => r.json()).then(h => { threshold = h.threshold; watchT = h.watch_threshold;
+  $("#health").textContent = `${h.model} · layer ${h.layer} · block ${fmt(h.threshold)}${h.watch_threshold != null ? ` · watch ${fmt(h.watch_threshold)}` : ""} · ${h.device}${h.steering ? " · steering ready" : ""}`; });
 tally({});
 </script>
 </body>

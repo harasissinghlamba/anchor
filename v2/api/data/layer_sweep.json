@@ -4,7 +4,7 @@
     "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
     "precision": "fp32",
     "compute_dtype": "fp32",
-    "device": "mps",
+    "device": "cpu",
     "versions": {
       "python": "3.13.5",
       "torch": "2.14.1",
@@ -24,17 +24,17 @@
     {
       "position": "start",
       "layer": 9,
-      "val_auroc": 0.9172
+      "val_auroc": 0.9171
     },
     {
       "position": "start",
       "layer": 12,
-      "val_auroc": 0.935
+      "val_auroc": 0.9351
     },
     {
       "position": "start",
       "layer": 15,
-      "val_auroc": 0.9228
+      "val_auroc": 0.9229
     },
     {
       "position": "start",
@@ -44,7 +44,7 @@
     {
       "position": "end",
       "layer": 6,
-      "val_auroc": 0.7829
+      "val_auroc": 0.783
     },
     {
       "position": "end",
@@ -54,12 +54,12 @@
     {
       "position": "end",
       "layer": 12,
-      "val_auroc": 0.8029
+      "val_auroc": 0.803
     },
     {
       "position": "end",
       "layer": 15,
-      "val_auroc": 0.7921
+      "val_auroc": 0.792
     },
     {
       "position": "end",

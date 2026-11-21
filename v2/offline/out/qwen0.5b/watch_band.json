@@ -1,0 +1,48 @@
+{
+  "run_meta": {
+    "model": "qwen0.5b",
+    "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "precision": "fp32",
+    "compute_dtype": "fp32",
+    "device": "n/a",
+    "versions": {
+      "python": "3.13.5",
+      "torch": "2.14.1",
+      "transformers": "5.21.0",
+      "scikit-learn": "1.9.1",
+      "numpy": "2.5.4",
+      "bitsandbytes": null
+    },
+    "date": "2026-11-21"
+  },
+  "watch_fpr": 0.1,
+  "watch_threshold": 0.525426,
+  "block_threshold": 0.73703,
+  "val_clean_n": 179,
+  "test": {
+    "block": {
+      "tpr": {
+        "hits": 188,
+        "n": 232,
+        "rate": 0.8103
+      },
+      "false_alarm": {
+        "hits": 7,
+        "n": 173,
+        "rate": 0.0405
+      }
+    },
+    "watch_or_block": {
+      "tpr": {
+        "hits": 202,
+        "n": 232,
+        "rate": 0.8707
+      },
+      "false_alarm": {
+        "hits": 11,
+        "n": 173,
+        "rate": 0.0636
+      }
+    }
+  }
+}

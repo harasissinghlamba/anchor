@@ -96,7 +96,8 @@ class Hub:
         # Each read is scored on its own (the single-page training frame); split payloads across reads are a
         # known gap of this path (the offline split rows carry one prior page).
         r = self.scorer.score(s.task, content[:MAX_CONTENT], attribution="projection" if attribution else None)
-        read = s.record(source, r, self.scorer.threshold, raised_by=raised_by)
+        read = s.record(source, r, self.scorer.threshold, raised_by=raised_by,
+                        watch=getattr(self.scorer, "watch_threshold", None))
         out = {**r, "level": read["level"], "session_level": s.level, "spike_z": read["spike_z"],
                "content_truncated": truncated}
         out.pop("window_scores", None)
@@ -109,8 +110,8 @@ class Hub:
 
     def handoff(self, src, dst, content):
         """Macro rule: a tainted sender taints the receiver; the message itself is scored as an untrusted read."""
-        if src.level == "tainted":
-            dst.taint_from(src.id, f"message from tainted agent {src.agent or src.id}")
+        if src.level in ("tainted", "watch"):
+            dst.taint_from(src.id, f"message from {src.level} agent {src.agent or src.id}", src.level)
             self.emit("propagate", session=dst.id, agent=dst.agent, source=src.id, source_agent=src.agent)
         out = self.score(dst, f"message:{src.agent or src.id}", content, raised_by=src.id) if content.strip() \
             else {"level": dst.level}
@@ -150,6 +151,7 @@ def create_app(scorer=None, steerer=None, model_info=None, static_dir=None):
         info = model_info or {}
         return {"ok": True, "model": info.get("model", "unknown"), "device": info.get("device", "unknown"),
                 "layer": getattr(scorer, "layer", None), "threshold": scorer.threshold,
+                "watch_threshold": getattr(scorer, "watch_threshold", None),
                 "steering": steerer is not None, "sessions": len(hub.sessions)}
 
     @app.post("/v1/sessions")

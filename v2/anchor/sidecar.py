@@ -12,8 +12,9 @@ output's score is the highest window score. The parent Scorer only read the firs
 in the middle of a long file was never read.
 
 Sessions: each agent run keeps its task, its untrusted-read scores and a taint flag. Levels:
-  tainted — a read scored at or above the probe threshold (from probe.json): every later side effect is blocked;
-  watch   — below threshold but a spike against this session's own baseline: later side effects need approval;
+  tainted — a read scored at or above the probe threshold (probe.json, 5 % val FPR): later side effects are blocked;
+  watch   — at or above the watch threshold (watch_band.json, 10 % val FPR), or a spike against this session's own
+            baseline: later side effects need a human's approval;
   clean   — neither.
 The watch rule is advisory and never lowers the measured threshold.
 """
@@ -33,7 +34,14 @@ SPIKE_FLOOR = 0.10     # and the score itself must be at least this
 
 
 class SidecarScorer(Scorer):
-    """Scorer whose raw_score reads every window of a long output, batched. Fail-closed entry point unchanged."""
+    """Scorer whose raw_score reads every window of a long output, batched. Fail-closed entry point unchanged.
+    watch_threshold: the 10 % val-FPR operating point from offline/watch_band.py (None when not computed)."""
+
+    def __init__(self, run, *a, **kw):
+        super().__init__(run, *a, **kw)
+        import json
+        band = run.out / "watch_band.json"
+        self.watch_threshold = json.loads(band.read_text())["watch_threshold"] if band.exists() else None
 
     def windows(self, output):
         ids = self.tok(output, add_special_tokens=False)["input_ids"]
@@ -70,6 +78,18 @@ class SidecarScorer(Scorer):
                 out.append(hs[j, at[j]].float().cpu().numpy())
         return out
 
+    def sentence_scores(self, task, output, prior=()):
+        """Attribution: each sentence scored on its own as the tool output (one batched pass). On the room's poisoned
+        invoice this ranks the injected instructions first where leave-one-out did not (docs/hackathon.md)."""
+        from .scorer import sentences
+        spans = sentences(output)
+        if not spans:
+            return []
+        base = self._base(task)
+        states = self._batch_states(task, [output[s:e] for s, e in spans], [])
+        return [{"start": s, "end": e, "text": output[s:e], "weight": round(self._prob(v - base), 6)}
+                for v, (s, e) in zip(states, spans)]
+
     def raw_score(self, task, output, prior=()):
         if not output.strip():
             return {"drift_score": 0.0, "skipped": True, "truncated": False, "windows": 0}
@@ -98,11 +118,13 @@ class Session:
             return None
         return float(np.mean(clean)), max(float(np.std(clean)), SPIKE_MIN_STD)
 
-    def classify(self, result, threshold):
+    def classify(self, result, threshold, watch=None):
         """Level for one read result; taint is sticky (a run never becomes cleaner)."""
         s = result.get("drift_score")
         if result.get("fail_closed") or (s is not None and s >= threshold):
             return "tainted", None
+        if watch is not None and s is not None and s >= watch:
+            return "watch", None
         b = self.baseline()
         if b and s is not None and s >= SPIKE_FLOOR:
             z = (s - b[0]) / b[1]
@@ -111,24 +133,31 @@ class Session:
             return "clean", round(z, 2)
         return "clean", None
 
-    def record(self, source, result, threshold, raised_by=None):
+    def record(self, source, result, threshold, raised_by=None, watch=None):
         with self.lock:
-            level, z = self.classify(result, threshold)
+            level, z = self.classify(result, threshold, watch)
             read = {"t": time.time(), "source": source, "drift_score": result.get("drift_score"), "spike_z": z,
                     "level": level, "fail_closed": result.get("fail_closed", False), "reason": result.get("reason")}
             self.reads.append(read)
             rank = {"clean": 0, "watch": 1, "tainted": 2}
             if rank[level] > rank[self.level]:
                 self.level, self.tainted_by = level, raised_by or source
-                self.reason = result.get("reason") or (f"drift {read['drift_score']} ≥ threshold {threshold:.3f}"
-                                                       if level == "tainted" else f"spike z={z} vs session baseline")
+                if result.get("reason"):
+                    self.reason = result["reason"]
+                elif level == "tainted":
+                    self.reason = f"drift {read['drift_score']} ≥ block threshold {threshold:.3f}"
+                elif z is None:
+                    self.reason = f"drift {read['drift_score']} ≥ watch threshold {watch:.3f}"
+                else:
+                    self.reason = f"spike z={z} vs session baseline"
             return read
 
-    def taint_from(self, other_id, reason):
-        """Macro rule: a message from a tainted agent taints the receiver."""
+    def taint_from(self, other_id, reason, level="tainted"):
+        """Macro rule: a message from a tainted (or watched) agent raises the receiver to the sender's level."""
+        rank = {"clean": 0, "watch": 1, "tainted": 2}
         with self.lock:
-            if self.level != "tainted":
-                self.level, self.tainted_by, self.reason = "tainted", other_id, reason
+            if rank[level] > rank[self.level]:
+                self.level, self.tainted_by, self.reason = level, other_id, reason
 
     def decide(self, tool):
         """Side-effect gate: allow / approve / block, from the session level."""
